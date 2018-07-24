@@ -25,5 +25,8 @@ public class Main {
         czlowiekZPsem.setZwierze(pies);
         czlowiekZKotem.setZwierze(kot);
 
+        // Zadanie 5
+        czlowiekZPsem.przedstawSie();
+        czlowiekZKotem.przedstawSie("Kocham zwierzęta");
     }
 }

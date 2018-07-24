@@ -43,4 +43,12 @@ public class Czlowiek {
     public void setDaneAdresowe(DaneAdresowe daneAdresowe) {
         this.daneAdresowe = daneAdresowe;
     }
+
+    public void przedstawSie() {
+        System.out.println(" Cześć nazywam się " + imie + " " + nazwisko);
+    }
+
+    public void przedstawSie(String wiadomosc) {
+        System.out.println(" Cześć nazywam się " + imie + " " + nazwisko + ". " + wiadomosc + " ");
+    }
 }
