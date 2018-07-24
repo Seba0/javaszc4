@@ -54,13 +54,13 @@ public class Main {
         System.out.println();
 
         // Zadanie 7
-        List<Integer> listaZElementamiTypuInteger = Arrays.asList(
+        List<Integer> listaZElementamiTypuInteger = new ArrayList<>(Arrays.asList(
                 1, 2, 3, 4, 5,
                 6, 7, 8, 9, 10,
-                11, 12, 13, 14, 15);
+                11, 12, 13, 14, 15));
 
-        for(Integer element : listaZElementamiTypuInteger) {
-            System.out.print(element + ' ');
+        for (Integer element : listaZElementamiTypuInteger) {
+            System.out.print(element + " ");
         }
         System.out.println();
 
