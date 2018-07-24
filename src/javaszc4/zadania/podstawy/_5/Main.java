@@ -5,10 +5,14 @@ public class Main {
     public static void main(String[] args) {
         // Klasy i dziedziczenie
         // Zadanie 1
-        Kot kot = new Kot("Kotek", 3);
         Pies pies = new Pies("Pesek", 2);
+        Kot kot = new Kot("Kotek", 3);
 
-        System.out.println(kot);
         System.out.println(pies);
+        System.out.println(kot);
+
+        // Zadanie 2
+        pies.powiedzKimJestes();
+        kot.powiedzKimJestes();
     }
 }

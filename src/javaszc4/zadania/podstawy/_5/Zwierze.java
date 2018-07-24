@@ -10,6 +10,10 @@ public class Zwierze {
         this.wiek = wiek;
     }
 
+    public void powiedzKimJestes() {
+        System.out.println("Jestem Zwierzę");
+    }
+
     @Override
     public String toString() {
         return "Zwierze{imie=" + imie + ", wiek=" + wiek + "}";
