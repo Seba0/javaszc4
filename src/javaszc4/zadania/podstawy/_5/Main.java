@@ -14,5 +14,7 @@ public class Main {
         // Zadanie 2
         pies.powiedzKimJestes();
         kot.powiedzKimJestes();
+
+        // Zadanie 3
     }
 }
