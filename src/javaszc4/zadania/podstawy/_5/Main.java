@@ -18,6 +18,12 @@ public class Main {
         pies.powiedzKimJestes();
         kot.powiedzKimJestes();
 
-        // Zadanie 3
+        // Zadanie 4
+        Czlowiek czlowiekZPsem = new Czlowiek("Jan", "Kowalski");
+        Czlowiek czlowiekZKotem = new Czlowiek("Marek", "Wiśniewsi");
+
+        czlowiekZPsem.setZwierze(pies);
+        czlowiekZKotem.setZwierze(kot);
+
     }
 }
