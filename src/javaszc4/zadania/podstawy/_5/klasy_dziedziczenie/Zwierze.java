@@ -1,4 +1,4 @@
-package javaszc4.zadania.podstawy._5;
+package javaszc4.zadania.podstawy._5.klasy_dziedziczenie;
 
 public class Zwierze {
 

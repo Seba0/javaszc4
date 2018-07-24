@@ -1,6 +1,6 @@
-package javaszc4.zadania.podstawy._5;
+package javaszc4.zadania.podstawy._5.klasy_dziedziczenie;
 
-import javaszc4.zadania.podstawy._5.rasy.RasaKota;
+import javaszc4.zadania.podstawy._5.klasy_dziedziczenie.rasy.RasaKota;
 
 public class Kot extends Zwierze {
 
