@@ -3,6 +3,9 @@ package javaszc4.zadania.podstawy._5;
 import javaszc4.zadania.podstawy._5.rasy.RasaKota;
 import javaszc4.zadania.podstawy._5.rasy.RasaPsa;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -28,5 +31,26 @@ public class Main {
         // Zadanie 5
         czlowiekZPsem.przedstawSie();
         czlowiekZKotem.przedstawSie("Kocham zwierzęta");
+
+        // Listy
+        // Zadanie 6
+        int wielkoscListy = 10;
+        List<String> listaZElementamiTypuString = new ArrayList<>(wielkoscListy);
+
+        for (int i = 1; i <= wielkoscListy; i++) {
+            listaZElementamiTypuString.add("element " + i);
+        }
+
+        for (int i = 0; i < wielkoscListy; i++) {
+            String element = listaZElementamiTypuString.get(i);
+            System.out.print(element + ' ');
+        }
+        System.out.println();
+
+        for (String element : listaZElementamiTypuString) {
+            System.out.print(element + ' ');
+        }
+        System.out.println();
+
     }
 }
