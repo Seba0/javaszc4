@@ -4,6 +4,7 @@ import javaszc4.zadania.podstawy._5.rasy.RasaKota;
 import javaszc4.zadania.podstawy._5.rasy.RasaPsa;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -52,5 +53,22 @@ public class Main {
         }
         System.out.println();
 
+        // Zadanie 7
+        List<Integer> listaZElementamiTypuInteger = Arrays.asList(
+                1, 2, 3, 4, 5,
+                6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15);
+
+        for(Integer element : listaZElementamiTypuInteger) {
+            System.out.print(element + ' ');
+        }
+        System.out.println();
+
+        System.out.println(listaZElementamiTypuInteger.size());
+
+        listaZElementamiTypuInteger.remove(0);
+        listaZElementamiTypuInteger.remove(listaZElementamiTypuInteger.size() - 1);
+
+        System.out.println(listaZElementamiTypuInteger.size());
     }
 }
