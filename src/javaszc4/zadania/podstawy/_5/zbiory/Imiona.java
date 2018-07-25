@@ -2,7 +2,7 @@ package javaszc4.zadania.podstawy._5.zbiory;
 import java.util.*;
 import java.util.regex.*;
 
-public class Main {
+public class Imiona {
 	private static String format(String imie) {
 		if (imie.isEmpty()) {
 			return imie;
@@ -13,7 +13,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
-		System.out.println("Podaj imiona, albo END aby zakonczyć");
+		System.out.println("Podaj imiona\n\tEND aby zakonczyć");
 		Set<String> imiona = new HashSet<>();
 		Pattern pattern = Pattern.compile("[A-Za-z]+");
 		while (true) {
