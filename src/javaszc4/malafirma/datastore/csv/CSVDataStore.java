@@ -3,16 +3,17 @@ package javaszc4.malafirma.datastore.csv;
 import javaszc4.malafirma.datastore.DataFilter;
 import javaszc4.malafirma.datastore.DataStore;
 import javaszc4.malafirma.datastore.DataTable;
+import javaszc4.malafirma.datastore.exceptions.DataStoreCorruptedException;
+import javaszc4.malafirma.datastore.exceptions.DataStoreException;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javaszc4.malafirma.datastore.exceptions.DataStoreCorruptedException;
-import javaszc4.malafirma.datastore.exceptions.DataStoreException;
 
 public class CSVDataStore implements DataStore {
 
@@ -226,7 +227,7 @@ public class CSVDataStore implements DataStore {
     }
 
     @Override
-    public synchronized <T extends DataTable> Iterable<T> select(Class<T> type, DataFilter<T> filter) throws IOException {
+    public synchronized <T extends DataTable> Collection<T> select(Class<? extends DataTable> type, DataFilter<T> filter) throws IOException {
         File f = getFile(type);
         if (f == null) {
             throw new DataStoreException();

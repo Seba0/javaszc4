@@ -3,13 +3,15 @@ package javaszc4.malafirma.datastore;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum DataStoreManager {
-    INSTANCE;
+public final class DataStoreManager {
 
-    private final Map<String, DataStore> dataStores = new HashMap<>();
-    private final Map<String, Class<? extends DataStore>> dataStoresClase = new HashMap<>();
+    private static final Map<String, DataStore> dataStores = new HashMap<>();
+    private static final Map<String, Class<? extends DataStore>> dataStoresClase = new HashMap<>();
 
-    public synchronized DataStore openStore(String name) throws Exception {
+    private DataStoreManager() {
+    }
+
+    public static synchronized DataStore openStore(String name) throws Exception {
         DataStore ds = dataStores.get(name);
         if (ds == null) {
             Class<? extends DataStore> aClass = dataStoresClase.get(name);
@@ -22,14 +24,14 @@ public enum DataStoreManager {
         return ds;
     }
 
-    public synchronized <T extends DataStore> boolean registerStore(String name, Class<T> type) {
+    public static synchronized <T extends DataStore> boolean registerStore(String name, Class<T> type) {
         if (dataStoresClase.containsKey(name)) {
             return false;
         }
         return dataStoresClase.put(name, type) == null;
     }
 
-    public synchronized boolean unregisterStore(String name) throws Exception {
+    public static synchronized boolean unregisterStore(String name) throws Exception {
         if (dataStoresClase.remove(name) == null) {
             return false;
         }
@@ -40,7 +42,7 @@ public enum DataStoreManager {
         return true;
     }
 
-    public synchronized <T extends DataStore> boolean unregisterStore(Class<T> type) throws Exception {
+    public static synchronized <T extends DataStore> boolean unregisterStore(Class<T> type) throws Exception {
         for (Map.Entry<String, Class<? extends DataStore>> t : dataStoresClase.entrySet()) {
             if (t.getValue().isAssignableFrom(type)) {
                 if (!unregisterStore(t.getKey())) {

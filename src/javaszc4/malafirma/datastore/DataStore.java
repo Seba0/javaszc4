@@ -1,6 +1,7 @@
 package javaszc4.malafirma.datastore;
 
 import java.io.IOException;
+import java.util.Collection;
 
 public interface DataStore extends AutoCloseable {
 
@@ -19,7 +20,7 @@ public interface DataStore extends AutoCloseable {
 
     <T extends DataTable> T select(Class<T> type, long id) throws IOException;
 
-    <T extends DataTable> Iterable<T> select(Class<T> type, DataFilter<T> filter) throws IOException;
+    <T extends DataTable> Collection<T> select(Class<? extends DataTable> type, DataFilter<T> filter) throws IOException;
 
     <T extends DataTable> boolean delete(T object) throws IOException;
 
