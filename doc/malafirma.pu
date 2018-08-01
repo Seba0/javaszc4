@@ -1,0 +1,388 @@
+@startuml
+
+namespace java {
+
+	namespace io {
+
+		interface .AutoCloseable {
+			+close() : void
+		}
+
+		interface .ObjectInput {
+		...
+		}
+		
+		.AutoCloseable <|- .ObjectInput : implement
+
+		interface .ObjectOutput {
+		...
+		}
+
+		.ObjectOutput -|> .AutoCloseable : implement
+
+		interface .Externalizable {
+			+readExternal(in : ObjectInput) : void
+			+writeExternal(out : ObjectOutput) : void
+		}
+
+
+		.ObjectOutput <.. .Externalizable : uses
+
+		.Externalizable ..> .ObjectInput : uses
+
+	}
+
+	namespace lang {
+
+		interface .Iterable<T> {
+			+iterator() : Iterator<T> 
+		}
+
+	}
+
+	namespace util {
+
+		interface .Map<K,V> {
+		...
+		}
+
+		interface .EventListener {
+		}
+
+		interface .Set<E> {
+		...
+		}
+
+		interface .List<E> {
+		...
+		}
+
+	}
+
+}
+
+namespace javaszc4.malafirma {
+
+	class .ApplicationController<<(S,#FF7700) Singleton>> {
+		-ViewController viewController
+		-DataStoreManager dataStoreManager
+		-PracownikManager pracownikManager
+
+		{static} +void main(String[] args) 
+	}
+
+	namespace datastore {
+
+		class .DataStoreManager<<(S,#FF7700) Singleton>> {
+			-dataStores : Map<String, DataStore>
+			+getStore(String name) : DataStore
+			+registerStore<T extends DataTable>(name : String; dataStoreClass : Class<T>) : boolean
+			+unregisterStore(String name) : boolean
+		}
+
+		abstract class .DataTable {
+			-id : long  = -1
+			+DataTable()
+			+getId() : long
+		}
+
+		interface .DataFilter<T extends DataTable> {
+			+accept(object : T) : boolean
+		}
+
+		interface .DataStore {
+			+insert<T extends DataTable>(object : T) : long
+			+insert<T extends DataTable>(objects : Iterable<T>) : int
+			+update<T extends DataTable>(object : T) : T
+			+select<T extends DataTable>(type : Class<T>; id : long) : T
+			+query<T extends DataTable>(type : Class<T>; filter : DataFilter<T>) : Iterable<T>
+			+delete<T extends DataTable>(object : T) : boolean
+			+delete<T extends DataTable>(objects : Iterable<T>) : int
+			+delete<T extends DataTable>(type : Class<T>; id : long) : T
+		}
+		
+		.DataStore --|> .AutoCloseable : extends
+		.DataStore ..> .DataTable : uses
+		.DataStore ..> .Iterable : uses
+		.DataStore ..> .DataFilter : uses
+		.DataStore "*" --* "1" .DataStoreManager : contains
+
+		class .CSVDataStore {
+		}
+
+	}
+	
+	namespace pracownicy {
+	
+		class .Stanowisko {
+			-nazwa : String
+			-opis : String
+			~Stanowisko()
+			+setNazwa(nazwa : String) : void
+			+getNazwa() : String
+			+setOpis(opis : String) : void
+			+getOpis() : String
+		}
+
+		class .Dzial {
+			-nazwa : String
+			-opis : String
+			~Dzial()
+			+setNazwa(nazwa : String) : void
+			+getNazwa() : String
+			+setOpis(opis : String) : void
+			+getOpis() : String
+		}
+
+		class .Pracownik {
+			-imie : String
+			-nazwisko : String
+			-pesel : long
+			-telefon : long
+			-adres : String
+			-stanowisko : Stanowisko
+			-dzial : Dzial
+			~Pracownik()
+			+setImie(String imie) : void
+			+getImie() : String
+			+setNazwisko(nazwisko : String) : void
+			+getNazwisko() :  String
+			+setPesel(pesel : long) : void
+			+getPesel() : long
+			+setTelefon(telefon : long) : void
+			+getTelefon() : long
+			+setAdres(adres : String) : void
+			+getAdres() : String
+			+setStanowisko(stanowisko : Stanowisko) : void
+			+getStanowisko() : Stanowisko
+			+setDzial(dzial : Dzial) : void
+			+getDzial() : Dzial
+		}
+
+		class .PracownikManager<<(S,#FF7700) Singleton>> {
+			+getPracownicy() : Set<Pracownki>
+			+getDzialy() : Set<Dzial>
+			+getStanowiska() : Set<Stanowiska>
+			+PracownikBuilder createPracownik(String imie, String nazwisko, long pesel)
+			+Stanowisko createStanowisko(String nazwa, String opis)
+			+Dzial createDzial(String nazwa, String opis)
+			+boolean delete(Pracownik pracownik)
+			+boolean delete(Stanowisko stanowisko)
+			+boolean delete(Dzial dzial)
+		}
+
+		class .PracownikBuilder {
+			~PracownikBuilder(imie : String; nazwisko : String; pesel : long)
+			+stanowisko(stanowisko : Stanowisko) : PracownikBuilder
+			+stanowisko(nazwa : String; opis : String) : PracownikBuilder
+			+dzial(dzial : Dzial) : PracownikBuilder
+			+dzial(nazwa : String; opis : String) : PracownikBuilder
+			+build() : Pracownik
+		}
+
+	}
+	
+	namespace view {
+
+		class .ViewController<<(S,#FF7700) Singleton>> {
+			-pracownicy : PracownicyFrame
+			-dzialy : DzialyFrame
+			-stanowiska : StanowiskaFrame
+			-framesMenu : FramesMenuFrame
+			-pagesMenu : PagesMenuFrame
+			-elementMenu : ElementMenuFrame
+			show() : void
+		}
+
+
+		namespace components {
+
+			abstract class .View {
+				-height : int
+				-width : int
+				{abstract} +draw() : void
+				+getHeight() : int
+				+getWidth() : int
+			}
+			
+			class .FrameView {
+				-title : String
+				-childs : List<View>
+				+setTitle(title : String) : void
+				+add(child : View) : boolean
+			}
+
+			class .TableView {
+				-columns : String[]
+				-rows : List<Object[]>
+				+setRows(rows : List<Object[]>) : void
+			}
+		
+			class .MenuView {
+				-options : MenuViewOption[]
+				-listeners : Set<MenuViewListener>
+				+setOptions(options : MenuViewOption[]) : void
+				+addListener(listener : MenuViewListener) : boolean
+				+removeListener(listener : MenuViewListener) : boolean
+			}
+
+			interface .MenuViewOption {
+				+getLabel() : String
+				+getOption() : char
+			}
+
+			interface .MenuViewListener {
+				+onSelect(menu : MenuView; option : MenuViewOption) : void
+			}
+
+		}
+
+
+		namespace menu {
+			enum .TableMenu {
+				PAGE
+				FRAME
+				ELEMENT
+			}
+			
+			enum .PageMenu {
+				FIRST
+				PREVIOUS
+				GO_TO
+				NEXT
+				LAST
+				CANCEL	
+			}
+
+			enum .FrameMenu {
+				PRACOWNICY
+				STANOWISKA
+				DZIALY
+				CANCEL
+			}
+
+			enum .ElementMenu {
+				NEW
+				EDIT
+				REMOVE
+				CANCEL
+			}
+		}
+
+		namespace frames {
+			class .PracownicyFrame {
+			}
+			class .StanowiskaFrame {
+			}
+			class .DzialyFrame {
+			}
+			class .PagesMenuFrame {
+			}
+			class .FramesMenuFrame {
+			}
+			class .ElementMenuFrame {
+			}
+		}
+	}
+}
+
+
+		
+.DataStore <|- .CSVDataStore : implements
+.CSVDataStore <-- .ApplicationController : create
+
+.Map "1" *-- "1" .DataStoreManager
+
+.Externalizable <|- .DataTable : extends
+.AutoCloseable <|- .DataStore : extends
+.DataTable <.. .DataStore : uses
+.Iterable <.. .DataStore : uses
+
+.DataStore ..> .DataFilter : uses
+.DataTable <.. .DataFilter : uses
+
+.DataStore "*" --* "1" .DataStoreManager : contains
+
+.DataTable <|- .Pracownik : extends
+.DataTable <|- .Stanowisko : extends
+.DataTable <|- .Dzial : extends
+
+.Stanowisko "1" *-- "*" .Pracownik : contains
+.Dzial "1" *-- "*" .Pracownik : contains
+
+.PracownikManager --> .PracownikBuilder : create
+.PracownikManager --> .Stanowisko: create
+.PracownikManager --> .Dzial : create
+
+.Pracownik <-- .PracownikBuilder : create
+.Stanowisko <.. .PracownikBuilder : uses
+.Dzial <.. .PracownikBuilder : uses
+
+.DataStoreManager <.. .PracownikManager : uses
+.DataStore <.. .PracownikManager : uses
+
+
+.DataStoreManager <-- .ApplicationController : create
+.ApplicationController --> .ViewController : create
+.ApplicationController -> .PracownikManager : create
+.ApplicationController -> .CSVDataStore : create
+
+
+.EventListener <|- .MenuViewListener : extends
+
+.FrameView --|> .View : implements
+.TableView --|> .View : implements
+.View <|-- .MenuView : implements
+
+.View "*" *-- "1" .FrameView : contains
+.MenuView "*" *-- "1" .MenuViewOption : contains
+.MenuViewListener "1" --* "*" .MenuView : contains
+
+
+.ViewController -* .Map : contains
+.MenuView -* .Set : contains
+.FrameView -* .List : contains
+.TableView -* .List : contains
+
+.TableMenu -|> .MenuViewOption : implements
+.PageMenu -|> .MenuViewOption : implements
+.FrameMenu -|> .MenuViewOption : implements
+.ElementMenu -|> .MenuViewOption : implements
+
+.PracownicyFrame --|> .FrameView : extends
+.StanowiskaFrame --|> .FrameView : extends
+.DzialyFrame --|> .FrameView : extends
+.PagesMenuFrame --|> .FrameView : extends
+.FramesMenuFrame --|> .FrameView : extends
+.ElementMenuFrame --|> .FrameView : extends
+
+.PracownicyFrame -o .TableView : contains
+.StanowiskaFrame -o .TableView : contains
+.DzialyFrame -o .TableView : contains
+
+.PracownicyFrame -o .MenuView : contains
+.StanowiskaFrame -o .MenuView : contains
+.DzialyFrame -o .MenuView : contains
+.PagesMenuFrame -o .MenuView : contains
+.FramesMenuFrame -o .MenuView : contains
+.ElementMenuFrame -o .MenuView : contains
+
+
+.PracownicyFrame ..> .TableMenu : uses
+.StanowiskaFrame ..> .TableMenu : uses
+.DzialyFrame ..> .TableMenu : uses
+
+.PagesMenuFrame ..> .PageMenu : uses
+.FramesMenuFrame ..> .FrameMenu : uses
+.ElementMenuFrame ..> .ElementMenu : uses
+
+.ViewController -|> .MenuViewListener : implements
+
+.PracownicyFrame o- .ViewController : contains
+.StanowiskaFrame o- .ViewController : contains
+.DzialyFrame o- .ViewController : contains
+.PagesMenuFrame o- .ViewController : contains
+.FramesMenuFrame o- .ViewController : contains
+.ElementMenuFrame o- .ViewController : contains
+
+@enduml
