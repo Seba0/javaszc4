@@ -4,23 +4,26 @@ import java.io.IOException;
 
 public interface DataStore extends AutoCloseable {
 
-    void open(String name);
+
+    void open(String name) throws IOException;
 
     boolean isOpen();
 
+    <T extends DataTable> long getNextId(Class<T> type) throws IOException;
+
     <T extends DataTable> long insert(T object) throws IOException;
 
-    <T extends DataTable> int insert(Iterable<T> objects);
+    <T extends DataTable> int insert(Class<T> type, Iterable<T> objects) throws IOException;
 
-    <T extends DataTable> T update(T object);
+    <T extends DataTable> T update(T object) throws IOException;
 
-    <T extends DataTable> T select(Class<T> type, long id);
+    <T extends DataTable> T select(Class<T> type, long id) throws IOException;
 
-    <T extends DataTable> Iterable<T> query(Class<T> type, DataFilter<T> filter);
+    <T extends DataTable> Iterable<T> select(Class<T> type, DataFilter<T> filter) throws IOException;
 
-    <T extends DataTable> boolean delete(T object);
+    <T extends DataTable> boolean delete(T object) throws IOException;
 
-    <T extends DataTable> int delete(Iterable<T> objects);
+    <T extends DataTable> int delete(Iterable<T> objects) throws IOException;
 
-    <T extends DataTable> T delete(Class<T> type, long id);
+    <T extends DataTable> T delete(Class<T> type, long id) throws IOException;
 }
