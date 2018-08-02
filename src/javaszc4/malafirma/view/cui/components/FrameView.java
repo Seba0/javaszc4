@@ -88,7 +88,10 @@ public class FrameView extends ViewContainer {
         FrameView subframe2 = new FrameView(frame);
         subframe2.setTitle("Lista 2");
 
-        LabelView labelView = new LabelView(frame, "Hello");
+        ViewContainer container = new ViewContainer(frame, false);
+        LabelView labelView = new LabelView(container, "Hello");
+        new LabelView(container, "World");
+        container.setHeight(labelView.getHeight());
         
         frame.draw(canvas);
         System.out.println(canvas);
