@@ -11,6 +11,11 @@ public class FrameView extends ViewContainer {
         super(parent, true);
     }
 
+    public FrameView(String title) {
+        super(null, true);
+        setTitle(title);
+    }
+
     public String getTitle() {
         return title;
     }

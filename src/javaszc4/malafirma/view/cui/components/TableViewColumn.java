@@ -3,24 +3,24 @@ package javaszc4.malafirma.view.cui.components;
 import java.util.Objects;
 
 /**
- *
  * @author sebastian
  */
-public class TableViewColumn {
+class TableViewColumn {
 
     private final String title;
     private final int size;
+    private int fixed = -1;
 
-    public TableViewColumn(String title, int size) {
+    TableViewColumn(String title, int size) {
         this.title = title;
         this.size = size;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public int getSize() {
+    int getSize() {
         return size;
     }
 
@@ -30,6 +30,17 @@ public class TableViewColumn {
         hash = 53 * hash + Objects.hashCode(this.title);
         hash = 53 * hash + this.size;
         return hash;
+    }
+
+    int getFixed() {
+        if (size < 0) {
+            return fixed;
+        }
+        return size;
+    }
+
+    void setFixed(int fixed) {
+        this.fixed = fixed;
     }
 
     @Override
@@ -47,10 +58,7 @@ public class TableViewColumn {
         if (this.size != other.size) {
             return false;
         }
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.title, other.title);
     }
 
 }

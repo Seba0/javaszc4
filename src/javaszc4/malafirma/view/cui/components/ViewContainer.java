@@ -1,12 +1,12 @@
 package javaszc4.malafirma.view.cui.components;
 
+import javaszc4.malafirma.view.cui.canvas.ViewCanvas;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javaszc4.malafirma.view.cui.canvas.ViewCanvas;
 
 /**
- *
  * @author sebastian
  */
 public class ViewContainer extends View implements Iterable<View> {
@@ -24,6 +24,10 @@ public class ViewContainer extends View implements Iterable<View> {
             return false;
         }
         return childs.add(view);
+    }
+
+    public void removeAll() {
+        childs.clear();
     }
 
     public void setVertical(boolean vertical) {
@@ -85,15 +89,15 @@ public class ViewContainer extends View implements Iterable<View> {
             }
         }
 
-            int sum = maxSize - (sizeSum + unsizedSize * unsized);
-            if (sum > 0 && lastUnsized != null) {
-                if(vertical) {
-                    lastUnsized.setHeight(lastUnsized.getHeight() + sum);
-                } else {
-                    lastUnsized.setWidth(lastUnsized.getWidth() + sum);
-                }
+        int sum = maxSize - (sizeSum + unsizedSize * unsized);
+        if (sum > 0 && lastUnsized != null) {
+            if (vertical) {
+                lastUnsized.setHeight(lastUnsized.getHeight() + sum);
+            } else {
+                lastUnsized.setWidth(lastUnsized.getWidth() + sum);
             }
-            
+        }
+
         sizeSum = 0;
 
         for (View v : childs) {

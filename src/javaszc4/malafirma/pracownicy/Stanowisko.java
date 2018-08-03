@@ -12,7 +12,7 @@ public class Stanowisko extends DataTable {
     private String nazwa;
     private String opis;
 
-    Stanowisko() {
+    public Stanowisko() {
     }
 
     public String getNazwa() {

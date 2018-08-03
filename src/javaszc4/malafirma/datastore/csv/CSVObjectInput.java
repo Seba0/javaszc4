@@ -1,14 +1,14 @@
 package javaszc4.malafirma.datastore.csv;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.util.Base64;
 import javaszc4.malafirma.datastore.DataStore;
 import javaszc4.malafirma.datastore.DataTable;
 import javaszc4.malafirma.datastore.exceptions.DataStoreCorruptedException;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.util.Base64;
+
 /**
- *
  * @author sebastian
  */
 class CSVObjectInput implements ObjectInput {
@@ -337,6 +337,8 @@ class CSVObjectInput implements ObjectInput {
         row = row.trim();
         if (row.isEmpty()) {
             throw new DataStoreCorruptedException(row);
+        } else if (row.startsWith(NULL + ',')) {
+            return null;
         } else if (row.charAt(0) != '"') {
             throw new DataStoreCorruptedException(row);
         }

@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,7 +97,7 @@ public class CSVDataStore implements DataStore {
 
         long nextId = getNextId(f);
 
-        try (Writer w = new FileWriter(f)) {
+        try (Writer w = new FileWriter(f, true)) {
             w.append(Long.toString(nextId));
             for (String cell : cells) {
                 w.append(',').append(cell == null ? "NULL" : cell);
@@ -231,6 +232,8 @@ public class CSVDataStore implements DataStore {
         File f = getFile(type);
         if (f == null) {
             throw new DataStoreException();
+        } else if(!f.exists()) {
+            return Collections.EMPTY_LIST;
         }
         try (BufferedReader r = new BufferedReader(new FileReader(f))) {
             int count = 0;

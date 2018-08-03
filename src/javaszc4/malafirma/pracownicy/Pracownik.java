@@ -16,7 +16,7 @@ public class Pracownik extends DataTable {
     private Stanowisko stanowisko;
     private Dzial dzial;
 
-    Pracownik() {
+    public Pracownik() {
     }
 
     public String getImie() {

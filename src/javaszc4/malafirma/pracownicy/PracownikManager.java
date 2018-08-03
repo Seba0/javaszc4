@@ -91,8 +91,21 @@ public final class PracownikManager {
         return false;
     }
 
+    private static boolean deleteTable(Class<? extends DataTable> table, long id) {
+        try {
+            DataStore dataStore = DataStoreManager.openStore("malafirma");
+            return dataStore.delete(table, id) != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean delete(Pracownik pracownik) {
         return deleteTable(pracownik);
+    }
+    public static boolean deletePracownik (long id) {
+        return deleteTable(Pracownik.class, id);
     }
 
     public static boolean delete(Stanowisko stanowisko) {
@@ -108,12 +121,46 @@ public final class PracownikManager {
         return false;
     }
 
+    public static boolean deleteStanowisko(long id) {
+        try {
+            DataStore dataStore = DataStoreManager.openStore("malafirma");
+            Stanowisko stanowisko = dataStore.select(Stanowisko.class, id);
+            if(stanowisko == null) {
+                return false;
+            }
+            Collection rows = dataStore.select(Pracownik.class, new PracownikStanowiskoFiltr(stanowisko));
+            if (rows.isEmpty()) {
+                return deleteTable(Stanowisko.class, id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean delete(Dzial dzial) {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");
             Collection rows = dataStore.select(Pracownik.class, new PracownikDzialFiltr(dzial));
             if (rows.isEmpty()) {
                 return deleteTable(dzial);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean deleteDzial(long id) {
+        try {
+            DataStore dataStore = DataStoreManager.openStore("malafirma");
+            Dzial dzial = dataStore.select(Dzial.class, id);
+            if(dzial == null) {
+                return false;
+            }
+            Collection rows = dataStore.select(Pracownik.class, new PracownikDzialFiltr(dzial));
+            if (rows.isEmpty()) {
+                return deleteTable(Stanowisko.class, id);
             }
         } catch (Exception e) {
             e.printStackTrace();

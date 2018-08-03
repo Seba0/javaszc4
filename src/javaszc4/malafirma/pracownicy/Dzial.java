@@ -12,7 +12,7 @@ public class Dzial extends DataTable {
     private String nazwa;
     private String opis;
 
-    Dzial() {
+    public Dzial() {
     }
 
     public String getNazwa() {
