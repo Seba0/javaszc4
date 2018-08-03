@@ -53,7 +53,7 @@ public class CSVDataStore implements DataStore {
     }
 
     private File getTmpFile() throws IOException {
-        File tmp = File.createTempFile("~", ".tmp", path);
+        File tmp = File.createTempFile("~transaction.", ".tmp", path);
         tmp.deleteOnExit();
         return tmp;
     }
