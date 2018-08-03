@@ -3,8 +3,6 @@ package javaszc4.malafirma.view.cui.components;
 import java.nio.charset.StandardCharsets;
 import javaszc4.malafirma.view.cui.canvas.ViewCanvas;
 
-import javaszc4.malafirma.view.cui.canvas.ViewCanvasImpl;
-
 public class FrameView extends ViewContainer {
 
     private String title;
@@ -72,28 +70,8 @@ public class FrameView extends ViewContainer {
                 canvas.drawChar(x, yEnd, canvas.getCharset() == StandardCharsets.UTF_8 ? '▄' : '-');
             }
 
-            ViewCanvas subCanvas = canvas.subCanvas(1, 1, w-2, h-2);
+            ViewCanvas subCanvas = canvas.subCanvas(1, 1, w - 2, h - 2);
             super.draw(subCanvas);
         }
-    }
-
-    public static void main(String[] args) {
-        ViewCanvas canvas = new ViewCanvasImpl(40, 20, StandardCharsets.UTF_8);
-        FrameView frame = new FrameView(null);
-        frame.setTitle("Pracownicy");
-
-        FrameView subframe = new FrameView(frame);
-        subframe.setTitle("Lista");
-
-        FrameView subframe2 = new FrameView(frame);
-        subframe2.setTitle("Lista 2");
-
-        ViewContainer container = new ViewContainer(frame, false);
-        LabelView labelView = new LabelView(container, "Hello");
-        new LabelView(container, "World");
-        container.setHeight(labelView.getHeight());
-        
-        frame.draw(canvas);
-        System.out.println(canvas);
     }
 }
