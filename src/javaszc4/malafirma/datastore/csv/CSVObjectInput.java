@@ -32,7 +32,13 @@ class CSVObjectInput implements ObjectInput {
             throw new DataStoreCorruptedException(row);
         }
         int fieldEnd = row.indexOf(',');
-        String value = row.substring(0, fieldEnd);
+        String value;
+        if (fieldEnd < 0) {
+            fieldEnd = row.length();
+            value = row;
+        } else {
+            value = row.substring(0, fieldEnd);
+        }
         if (NULL.equalsIgnoreCase(value)) {
             return null;
         }
@@ -384,6 +390,10 @@ class CSVObjectInput implements ObjectInput {
                 }
             } else if (c == '"') {
                 count++;
+                if (i + 1 == row.length()) {
+                    row = row.substring(i + 1);
+                    return sb.toString();
+                }
             } else {
                 sb.append(c);
             }

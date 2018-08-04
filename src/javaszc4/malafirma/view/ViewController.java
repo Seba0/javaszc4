@@ -98,9 +98,9 @@ public final class ViewController {
         System.out.println(canvas);
         switch (selectedOption(5)) {
             case 1:
-                return ViewType.DODAJ_PRACOWNIKA;
+                return ViewType.DODAJ_STANOWISKO;
             case 2:
-                return ViewType.USUN_PRACOWNIKA;
+                return ViewType.USUN_STANOWISKO;
             case 3:
                 return ViewType.LISTA_PRACOWNICY;
             case 4:
@@ -135,9 +135,9 @@ public final class ViewController {
         System.out.println(canvas);
         switch (selectedOption(5)) {
             case 1:
-                return ViewType.DODAJ_PRACOWNIKA;
+                return ViewType.DODAJ_DZIAL;
             case 2:
-                return ViewType.USUN_PRACOWNIKA;
+                return ViewType.USUN_DZIAL;
             case 3:
                 return ViewType.LISTA_PRACOWNICY;
             case 4:
@@ -174,110 +174,114 @@ public final class ViewController {
         long id;
         String[] fields;
         do {
-            canvas.clear();
-            switch (type) {
-                default:
-                case LISTA_PRACOWNICY:
-                    type = showPracownicy(canvas);
-                    break;
-                case LISTA_STANOWISKA:
-                    type = showStanowiska(canvas);
-                    break;
-                case LISTA_DZIALY:
-                    type = showDzialy(canvas);
-                    break;
-                case USUN_PRACOWNIKA:
-                    type = ViewType.LISTA_PRACOWNICY;
-                    System.out.print("Podaj id pracownika do usunięcia lub 0 aby anulować.\n\tId pracownika: ");
-                    id = SCANNER.nextLong();
-                    if (id > 0) {
-                        if (PracownikManager.deletePracownik(id)) {
-                            System.out.println("Pracownik został usunięty");
-                        } else {
-                            System.out.println("Nie udało się usunąć pracownika");
-                        }
-                    }
-                    break;
-                case USUN_STANOWISKO:
-                    type = ViewType.LISTA_STANOWISKA;
-                    System.out.println("Do stanowiska nie mogą być przypisani pracownicy");
-                    System.out.print("Podaj id stanowiska do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
-                    id = SCANNER.nextLong();
-                    if (id > 0) {
-                        if (PracownikManager.deleteStanowisko(id)) {
-                            System.out.println("Stanowisko zostało usunięty");
-                        } else {
-                            System.out.println("Nie udało się usunąć stanowiska");
-                        }
-                    }
-                    break;
-                case USUN_DZIAL:
-                    type = ViewType.LISTA_DZIALY;
-                    System.out.println("Do działu nie mogą być przypisani pracownicy");
-                    System.out.print("Podaj id działu do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
-                    id = SCANNER.nextLong();
-                    if (id > 0) {
-                        if (PracownikManager.deleteDzial(id)) {
-                            System.out.println("Dział został usunięty");
-                        } else {
-                            System.out.println("Nie udało się usunąć działu");
-                        }
-                    }
-                    break;
-                case DODAJ_PRACOWNIKA:
-                    type = ViewType.LISTA_PRACOWNICY;
-                    fields = FORM.printForm(FormPracownik.values());
-                    if (fields == null) {
+            try {
+                canvas.clear();
+                switch (type) {
+                    default:
+                    case LISTA_PRACOWNICY:
+                        type = showPracownicy(canvas);
                         break;
-                    }
-                    Stanowisko stanowisko = null;
-                    String tmp = fields[FormPracownik.STANOWISKO.ordinal()];
-                    if (StringUtils.isNumeric(tmp)) {
-                        stanowisko = PracownikManager.getStanowisko(Long.parseUnsignedLong(tmp));
-                    }
-                    if (stanowisko == null) {
-                        stanowisko = PracownikManager.getStanowisko(tmp);
-                    }
-                    Dzial dzial = null;
-                    tmp = fields[FormPracownik.DZIAL.ordinal()];
-                    if (StringUtils.isNumeric(tmp)) {
-                        dzial = PracownikManager.getDzial(Long.parseUnsignedLong(tmp));
-                    }
-                    if (dzial == null) {
-                        dzial = PracownikManager.getDzial(tmp);
-                    }
-                    PracownikManager.createPracownik(
-                            fields[FormPracownik.IMIE.ordinal()],
-                            fields[FormPracownik.NAZWISKO.ordinal()],
-                            Long.parseUnsignedLong(fields[FormPracownik.PESEL.ordinal()]))
-                            .telefon(Long.parseUnsignedLong(fields[FormPracownik.TELEFON.ordinal()]))
-                            .adres(fields[FormPracownik.ADRES.ordinal()])
-                            .stanowisko(stanowisko)
-                            .dzial(dzial)
-                            .build();
-                    break;
-                case DODAJ_STANOWISKO:
-                    type = ViewType.LISTA_STANOWISKA;
-                    fields = FORM.printForm(FormStanowisko.values());
-                    if (fields == null) {
+                    case LISTA_STANOWISKA:
+                        type = showStanowiska(canvas);
                         break;
-                    }
-                    PracownikManager.createStanowisko(
-                            fields[FormStanowisko.NAZWA.ordinal()],
-                            fields[FormStanowisko.OPIS.ordinal()]
-                    );
-                    break;
-                case DODAJ_DZIAL:
-                    type = ViewType.LISTA_DZIALY;
-                    fields = FORM.printForm(FormDzial.values());
-                    if (fields == null) {
+                    case LISTA_DZIALY:
+                        type = showDzialy(canvas);
                         break;
-                    }
-                    PracownikManager.createStanowisko(
-                            fields[FormDzial.NAZWA.ordinal()],
-                            fields[FormDzial.OPIS.ordinal()]
-                    );
-                    break;
+                    case USUN_PRACOWNIKA:
+                        type = ViewType.LISTA_PRACOWNICY;
+                        System.out.print("Podaj id pracownika do usunięcia lub 0 aby anulować.\n\tId pracownika: ");
+                        id = SCANNER.nextLong();
+                        if (id > 0) {
+                            if (PracownikManager.deletePracownik(id)) {
+                                System.out.println("Pracownik został usunięty");
+                            } else {
+                                System.out.println("Nie udało się usunąć pracownika");
+                            }
+                        }
+                        break;
+                    case USUN_STANOWISKO:
+                        type = ViewType.LISTA_STANOWISKA;
+                        System.out.println("Do stanowiska nie mogą być przypisani pracownicy");
+                        System.out.print("Podaj id stanowiska do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
+                        id = SCANNER.nextLong();
+                        if (id > 0) {
+                            if (PracownikManager.deleteStanowisko(id)) {
+                                System.out.println("Stanowisko zostało usunięty");
+                            } else {
+                                System.out.println("Nie udało się usunąć stanowiska");
+                            }
+                        }
+                        break;
+                    case USUN_DZIAL:
+                        type = ViewType.LISTA_DZIALY;
+                        System.out.println("Do działu nie mogą być przypisani pracownicy");
+                        System.out.print("Podaj id działu do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
+                        id = SCANNER.nextLong();
+                        if (id > 0) {
+                            if (PracownikManager.deleteDzial(id)) {
+                                System.out.println("Dział został usunięty");
+                            } else {
+                                System.out.println("Nie udało się usunąć działu");
+                            }
+                        }
+                        break;
+                    case DODAJ_PRACOWNIKA:
+                        type = ViewType.LISTA_PRACOWNICY;
+                        fields = FORM.printForm(FormPracownik.values());
+                        if (fields == null) {
+                            break;
+                        }
+                        Stanowisko stanowisko = null;
+                        String tmp = fields[FormPracownik.STANOWISKO.ordinal()];
+                        if (StringUtils.isNumeric(tmp)) {
+                            stanowisko = PracownikManager.getStanowisko(Long.parseUnsignedLong(tmp));
+                        }
+                        if (stanowisko == null) {
+                            stanowisko = PracownikManager.getStanowisko(tmp);
+                        }
+                        Dzial dzial = null;
+                        tmp = fields[FormPracownik.DZIAL.ordinal()];
+                        if (StringUtils.isNumeric(tmp)) {
+                            dzial = PracownikManager.getDzial(Long.parseUnsignedLong(tmp));
+                        }
+                        if (dzial == null) {
+                            dzial = PracownikManager.getDzial(tmp);
+                        }
+                        PracownikManager.createPracownik(
+                                fields[FormPracownik.IMIE.ordinal()],
+                                fields[FormPracownik.NAZWISKO.ordinal()],
+                                Long.parseUnsignedLong(fields[FormPracownik.PESEL.ordinal()]))
+                                .telefon(Long.parseUnsignedLong(fields[FormPracownik.TELEFON.ordinal()]))
+                                .adres(fields[FormPracownik.ADRES.ordinal()])
+                                .stanowisko(stanowisko)
+                                .dzial(dzial)
+                                .build();
+                        break;
+                    case DODAJ_STANOWISKO:
+                        type = ViewType.LISTA_STANOWISKA;
+                        fields = FORM.printForm(FormStanowisko.values());
+                        if (fields == null) {
+                            break;
+                        }
+                        PracownikManager.createStanowisko(
+                                fields[FormStanowisko.NAZWA.ordinal()],
+                                fields[FormStanowisko.OPIS.ordinal()]
+                        );
+                        break;
+                    case DODAJ_DZIAL:
+                        type = ViewType.LISTA_DZIALY;
+                        fields = FORM.printForm(FormDzial.values());
+                        if (fields == null) {
+                            break;
+                        }
+                        PracownikManager.createDzial(
+                                fields[FormDzial.NAZWA.ordinal()],
+                                fields[FormDzial.OPIS.ordinal()]
+                        );
+                        break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } while (type != ViewType.ZAKONCZ);
         System.out.println("Program zakończył działanie...");
