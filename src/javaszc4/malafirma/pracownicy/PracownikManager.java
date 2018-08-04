@@ -169,19 +169,41 @@ public final class PracownikManager {
         return false;
     }
 
+    private static boolean isObject(Class<? extends DataTable> table, long id) {
+        try {
+            DataStore dataStore = DataStoreManager.openStore("malafirma");
+            return dataStore.select(table, id) != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    private static <T extends DataTable> boolean isObject(Class<T> table, DataFilter<T> filter) {
+        try {
+            DataStore dataStore = DataStoreManager.openStore("malafirma");
+            return !dataStore.select(table, filter).isEmpty();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
     public static boolean isStanowisko(long id) {
-        return false; //TODO - dokończyć
+        return isObject(Stanowisko.class, id);
     }
 
     public static boolean isStanowisko(String nazwa) {
-        return false; //TODO - dokończyć
+        return isObject(Stanowisko.class, new StanowiskoFiltr(nazwa));
     }
 
     public static boolean isDzial(long id) {
-        return false; //TODO - dokończyć
+        return isObject(Dzial.class, id);
     }
 
     public static boolean isDzial(String nazwa) {
-        return false; //TODO - dokończyć
+        return isObject(Dzial.class, new DzialFiltr(nazwa));
     }
 }

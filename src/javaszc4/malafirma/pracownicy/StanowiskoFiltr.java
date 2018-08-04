@@ -6,15 +6,19 @@ import java.util.Objects;
 
 class StanowiskoFiltr implements DataFilter<Stanowisko> {
 
-    private final Stanowisko stanowisko;
+    private final String nazwa;
 
     StanowiskoFiltr(Stanowisko stanowisko) {
-        this.stanowisko = stanowisko;
+        this.nazwa = stanowisko.getNazwa();
+    }
+
+    StanowiskoFiltr(String nazwa) {
+        this.nazwa = nazwa;
     }
 
     @Override
     public boolean accept(Stanowisko object) {
-        return Objects.equals(stanowisko.getNazwa(), object.getNazwa());
+        return Objects.equals(nazwa, object.getNazwa());
     }
 
     @Override

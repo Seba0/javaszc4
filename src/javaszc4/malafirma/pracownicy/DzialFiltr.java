@@ -6,15 +6,19 @@ import java.util.Objects;
 
 class DzialFiltr implements DataFilter<Dzial> {
 
-    private final Dzial dzial;
+    private final String nazwa;
 
     DzialFiltr(Dzial dzial) {
-        this.dzial = dzial;
+        this.nazwa = dzial.getNazwa();
+    }
+
+    DzialFiltr(String nazwa) {
+        this.nazwa = nazwa;
     }
 
     @Override
     public boolean accept(Dzial object) {
-        return Objects.equals(dzial.getNazwa(), object.getNazwa());
+        return Objects.equals(nazwa, object.getNazwa());
     }
 
     @Override
