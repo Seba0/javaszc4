@@ -14,10 +14,12 @@ import javaszc4.malafirma.view.cui.components.ViewContainer;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Scanner;
+import javaszc4.malafirma.view.cui.simple.*;
 
 public final class ViewController {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+	private static final SimpleForm FORM = new SimpleForm();
 
     private ViewController() {
     }
@@ -228,11 +230,15 @@ public final class ViewController {
                     long pesel = SCANNER.nextLong();
                     System.out.print("Podaj telefon: ");
                     long telefon = SCANNER.nextLong();
-                    //System.out.print("Podaj adres: ");
-                    //String adres = SCANNER.next();
+                    System.out.print("Podaj adres: ");
+                    String adres = SCANNER.nextLine();
                     PracownikManager.createPracownik(imie, nazwisko, pesel)
-                            .telefon(telefon).build();
+                            .telefon(telefon).adres(adres).build();
                     break;
+					case DODAJ_STANOWISKO:
+						type = ViewType.LISTA_STANOWISKA;
+						
+						break;
             }
         } while (type != ViewType.ZAKONCZ);
         System.out.println("Program zakończył działanie...");

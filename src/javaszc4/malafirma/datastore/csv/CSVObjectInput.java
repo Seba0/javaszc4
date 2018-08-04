@@ -337,7 +337,8 @@ class CSVObjectInput implements ObjectInput {
         row = row.trim();
         if (row.isEmpty()) {
             throw new DataStoreCorruptedException(row);
-        } else if (row.startsWith(NULL + ',')) {
+        } else if (row.startsWith(NULL)) {
+			row = row.substring(row.indexOf(','));
             return null;
         } else if (row.charAt(0) != '"') {
             throw new DataStoreCorruptedException(row);
