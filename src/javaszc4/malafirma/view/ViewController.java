@@ -4,22 +4,25 @@ import javaszc4.malafirma.pracownicy.Dzial;
 import javaszc4.malafirma.pracownicy.Pracownik;
 import javaszc4.malafirma.pracownicy.PracownikManager;
 import javaszc4.malafirma.pracownicy.Stanowisko;
+import javaszc4.malafirma.utils.StringUtils;
 import javaszc4.malafirma.view.cui.canvas.ViewCanvas;
 import javaszc4.malafirma.view.cui.canvas.ViewCanvasImpl;
 import javaszc4.malafirma.view.cui.components.FrameView;
 import javaszc4.malafirma.view.cui.components.LabelView;
 import javaszc4.malafirma.view.cui.components.TableView;
 import javaszc4.malafirma.view.cui.components.ViewContainer;
+import javaszc4.malafirma.view.cui.simple.SimpleForm;
+import javaszc4.malafirma.view.form.FormStanowisko;
+import javaszc4.malafirma.view.form.FormPracownik;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Scanner;
-import javaszc4.malafirma.view.cui.simple.*;
 
 public final class ViewController {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-	private static final SimpleForm FORM = new SimpleForm();
+    private static final SimpleForm FORM = new SimpleForm();
 
     private ViewController() {
     }
@@ -107,7 +110,6 @@ public final class ViewController {
     }
 
 
-
     private static ViewType showDzialy(ViewCanvas canvas) {
         FrameView frame = new FrameView("Działy");
 
@@ -169,6 +171,7 @@ public final class ViewController {
         ViewCanvas canvas = new ViewCanvasImpl(100, 30, StandardCharsets.UTF_8);
         ViewType type = ViewType.LISTA_PRACOWNICY;
         long id;
+        String[] fields;
         do {
             canvas.clear();
             switch (type) {
@@ -186,8 +189,8 @@ public final class ViewController {
                     type = ViewType.LISTA_PRACOWNICY;
                     System.out.print("Podaj id pracownika do usunięcia lub 0 aby anulować.\n\tId pracownika: ");
                     id = SCANNER.nextLong();
-                    if(id > 0) {
-                        if(PracownikManager.deletePracownik(id)) {
+                    if (id > 0) {
+                        if (PracownikManager.deletePracownik(id)) {
                             System.out.println("Pracownik został usunięty");
                         } else {
                             System.out.println("Nie udało się usunąć pracownika");
@@ -199,8 +202,8 @@ public final class ViewController {
                     System.out.println("Do stanowiska nie mogą być przypisani pracownicy");
                     System.out.print("Podaj id stanowiska do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
                     id = SCANNER.nextLong();
-                    if(id > 0) {
-                        if(PracownikManager.deleteStanowisko(id)) {
+                    if (id > 0) {
+                        if (PracownikManager.deleteStanowisko(id)) {
                             System.out.println("Stanowisko zostało usunięty");
                         } else {
                             System.out.println("Nie udało się usunąć stanowiska");
@@ -212,8 +215,8 @@ public final class ViewController {
                     System.out.println("Do działu nie mogą być przypisani pracownicy");
                     System.out.print("Podaj id działu do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
                     id = SCANNER.nextLong();
-                    if(id > 0) {
-                        if(PracownikManager.deleteDzial(id)) {
+                    if (id > 0) {
+                        if (PracownikManager.deleteDzial(id)) {
                             System.out.println("Dział został usunięty");
                         } else {
                             System.out.println("Nie udało się usunąć działu");
@@ -222,23 +225,38 @@ public final class ViewController {
                     break;
                 case DODAJ_PRACOWNIKA:
                     type = ViewType.LISTA_PRACOWNICY;
-                    System.out.print("Podaj imię: ");
-                    String imie = SCANNER.next();
-                    System.out.print("Podaj nazwisko: ");
-                    String nazwisko = SCANNER.next();
-                    System.out.print("Podaj PESEL: ");
-                    long pesel = SCANNER.nextLong();
-                    System.out.print("Podaj telefon: ");
-                    long telefon = SCANNER.nextLong();
-                    System.out.print("Podaj adres: ");
-                    String adres = SCANNER.nextLine();
-                    PracownikManager.createPracownik(imie, nazwisko, pesel)
-                            .telefon(telefon).adres(adres).build();
+                    fields = FORM.printForm(FormPracownik.values());
+                    Stanowisko stanowisko = null;
+                    String tmp = fields[FormPracownik.STANOWISKO.ordinal()];
+                    if (StringUtils.isNumeric(tmp)) {
+                        stanowisko = PracownikManager.getStanowisko(Long.parseUnsignedLong(tmp));
+                    }
+                    if (stanowisko == null) {
+                        stanowisko = PracownikManager.getStanowisko(tmp);
+                    }
+                    Dzial dzial = null;
+                    tmp = fields[FormPracownik.DZIAL.ordinal()];
+                    if (StringUtils.isNumeric(tmp)) {
+                        dzial = PracownikManager.getDzial(Long.parseUnsignedLong(tmp));
+                    }
+                    if (dzial == null) {
+                        dzial = PracownikManager.getDzial(tmp);
+                    }
+                    PracownikManager.createPracownik(
+                            fields[FormPracownik.IMIE.ordinal()],
+                            fields[FormPracownik.NAZWISKO.ordinal()],
+                            Long.parseUnsignedLong(fields[FormPracownik.PESEL.ordinal()]))
+                            .telefon(Long.parseUnsignedLong(fields[FormPracownik.TELEFON.ordinal()]))
+                            .adres(fields[FormPracownik.ADRES.ordinal()])
+                            .stanowisko(stanowisko)
+                            .dzial(dzial)
+                            .build();
                     break;
-					case DODAJ_STANOWISKO:
-						type = ViewType.LISTA_STANOWISKA;
-						
-						break;
+                case DODAJ_STANOWISKO:
+                    type = ViewType.LISTA_STANOWISKA;
+                    fields = FORM.printForm(FormStanowisko.values());
+
+                    break;
             }
         } while (type != ViewType.ZAKONCZ);
         System.out.println("Program zakończył działanie...");

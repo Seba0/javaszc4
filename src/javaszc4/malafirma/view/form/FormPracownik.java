@@ -1,12 +1,12 @@
 package javaszc4.malafirma.view.form;
 
-import javaszc4.malafirma.pracownicy.Pracownik;
 import javaszc4.malafirma.pracownicy.PracownikManager;
-import javaszc4.malafirma.view.cui.simple.SimpleFormOption;
+import javaszc4.malafirma.utils.StringUtils;
+import javaszc4.malafirma.view.cui.simple.SimpleFormElement;
 
 import java.math.BigInteger;
 
-public enum FormPracownik implements SimpleFormOption {
+public enum FormPracownik implements SimpleFormElement {
     IMIE("Imię"),
     NAZWISKO("Nazwisko"),
     PESEL("Pesel") {
@@ -51,13 +51,13 @@ public enum FormPracownik implements SimpleFormOption {
             if (!super.isValid(value)) {
                 return false;
             }
-            if(FormPracownik.isNumeric(value)) {
+            if(StringUtils.isNumeric(value)) {
                 long id = Long.parseUnsignedLong(value);
-                if(PracownikManager.isStanowisko(id)) {
+                if(PracownikManager.getStanowisko(id) != null) {
                     return true;
                 }
             }
-            return PracownikManager.isStanowisko(value);
+            return PracownikManager.getStanowisko(value) != null;
         }
     },
     DZIAL("Dział") {
@@ -66,13 +66,13 @@ public enum FormPracownik implements SimpleFormOption {
             if (!super.isValid(value)) {
                 return false;
             }
-            if(FormPracownik.isNumeric(value)) {
+            if(StringUtils.isNumeric(value)) {
                 long id = Long.parseUnsignedLong(value);
-                if(PracownikManager.isDzial(id)) {
+                if(PracownikManager.getDzial(id) != null) {
                     return true;
                 }
             }
-            return PracownikManager.isDzial(value);
+            return PracownikManager.getDzial(value) != null;
         }
     };
 
@@ -83,15 +83,6 @@ public enum FormPracownik implements SimpleFormOption {
 
     FormPracownik(String label) {
         this.label = label;
-    }
-
-    private static boolean isNumeric(String value) {
-        for (char c : value.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     @Override

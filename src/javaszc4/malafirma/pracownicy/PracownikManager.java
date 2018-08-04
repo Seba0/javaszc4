@@ -169,41 +169,49 @@ public final class PracownikManager {
         return false;
     }
 
-    private static boolean isObject(Class<? extends DataTable> table, long id) {
+    private static <T extends DataTable> T getObject(Class<T> table, long id) {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");
-            return dataStore.select(table, id) != null;
+            return dataStore.select(table, id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
 
     }
 
-    private static <T extends DataTable> boolean isObject(Class<T> table, DataFilter<T> filter) {
+    private static <T extends DataTable> Collection<T> getObject(Class<T> table, DataFilter<T> filter) {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");
-            return !dataStore.select(table, filter).isEmpty();
+            return dataStore.select(table, filter);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return Collections.EMPTY_LIST;
 
     }
 
-    public static boolean isStanowisko(long id) {
-        return isObject(Stanowisko.class, id);
+    public static Stanowisko getStanowisko(long id) {
+        return getObject(Stanowisko.class, id);
     }
 
-    public static boolean isStanowisko(String nazwa) {
-        return isObject(Stanowisko.class, new StanowiskoFiltr(nazwa));
+    private static <T extends DataTable> T getSingle(Class<T> table, DataFilter<T> filter) {
+        Collection<T> collection = getObject(table, filter);
+        for (T element : collection) {
+            return element;
+        }
+        return null;
     }
 
-    public static boolean isDzial(long id) {
-        return isObject(Dzial.class, id);
+    public static Stanowisko getStanowisko(String nazwa) {
+        return getSingle(Stanowisko.class, new StanowiskoFiltr(nazwa));
     }
 
-    public static boolean isDzial(String nazwa) {
-        return isObject(Dzial.class, new DzialFiltr(nazwa));
+    public static Dzial getDzial(long id) {
+        return getObject(Dzial.class, id);
+    }
+
+    public static Dzial getDzial(String nazwa) {
+        return getSingle(Dzial.class, new DzialFiltr(nazwa));
     }
 }
