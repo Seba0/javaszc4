@@ -12,8 +12,9 @@ import javaszc4.malafirma.view.cui.components.LabelView;
 import javaszc4.malafirma.view.cui.components.TableView;
 import javaszc4.malafirma.view.cui.components.ViewContainer;
 import javaszc4.malafirma.view.cui.simple.SimpleForm;
-import javaszc4.malafirma.view.form.FormStanowisko;
+import javaszc4.malafirma.view.form.FormDzial;
 import javaszc4.malafirma.view.form.FormPracownik;
+import javaszc4.malafirma.view.form.FormStanowisko;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -226,6 +227,9 @@ public final class ViewController {
                 case DODAJ_PRACOWNIKA:
                     type = ViewType.LISTA_PRACOWNICY;
                     fields = FORM.printForm(FormPracownik.values());
+                    if (fields == null) {
+                        break;
+                    }
                     Stanowisko stanowisko = null;
                     String tmp = fields[FormPracownik.STANOWISKO.ordinal()];
                     if (StringUtils.isNumeric(tmp)) {
@@ -255,7 +259,24 @@ public final class ViewController {
                 case DODAJ_STANOWISKO:
                     type = ViewType.LISTA_STANOWISKA;
                     fields = FORM.printForm(FormStanowisko.values());
-
+                    if (fields == null) {
+                        break;
+                    }
+                    PracownikManager.createStanowisko(
+                            fields[FormStanowisko.NAZWA.ordinal()],
+                            fields[FormStanowisko.OPIS.ordinal()]
+                    );
+                    break;
+                case DODAJ_DZIAL:
+                    type = ViewType.LISTA_DZIALY;
+                    fields = FORM.printForm(FormDzial.values());
+                    if (fields == null) {
+                        break;
+                    }
+                    PracownikManager.createStanowisko(
+                            fields[FormDzial.NAZWA.ordinal()],
+                            fields[FormDzial.OPIS.ordinal()]
+                    );
                     break;
             }
         } while (type != ViewType.ZAKONCZ);
