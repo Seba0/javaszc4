@@ -104,7 +104,8 @@ public final class PracownikManager {
     public static boolean delete(Pracownik pracownik) {
         return deleteTable(pracownik);
     }
-    public static boolean deletePracownik (long id) {
+
+    public static boolean deletePracownik(long id) {
         return deleteTable(Pracownik.class, id);
     }
 
@@ -125,7 +126,7 @@ public final class PracownikManager {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");
             Stanowisko stanowisko = dataStore.select(Stanowisko.class, id);
-            if(stanowisko == null) {
+            if (stanowisko == null) {
                 return false;
             }
             Collection rows = dataStore.select(Pracownik.class, new PracownikStanowiskoFiltr(stanowisko));
@@ -155,7 +156,7 @@ public final class PracownikManager {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");
             Dzial dzial = dataStore.select(Dzial.class, id);
-            if(dzial == null) {
+            if (dzial == null) {
                 return false;
             }
             Collection rows = dataStore.select(Pracownik.class, new PracownikDzialFiltr(dzial));
@@ -166,5 +167,21 @@ public final class PracownikManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean isStanowisko(long id) {
+        return false; //TODO - dokończyć
+    }
+
+    public static boolean isStanowisko(String nazwa) {
+        return false; //TODO - dokończyć
+    }
+
+    public static boolean isDzial(long id) {
+        return false; //TODO - dokończyć
+    }
+
+    public static boolean isDzial(String nazwa) {
+        return false; //TODO - dokończyć
     }
 }
