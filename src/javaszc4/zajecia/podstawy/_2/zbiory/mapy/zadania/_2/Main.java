@@ -12,9 +12,12 @@ public class Main {
             filmy.add(new Film("Film " + i, EnumSet.of(values[r.nextInt(values.length)]), "Reżyser " + i, 2000 + i));
         }
 
+        filmy.add(new Film("Nowy film", EnumSet.of(Gatunek.NOWY), "Reżyser nowy", 2018));
+
         for (Film f : filmy) {
             System.out.println(f);
         }
+        System.out.println();
 
         Map<Gatunek, List<Film>> mapaFilmow = new HashMap<>();
         for (Film f : filmy) {
