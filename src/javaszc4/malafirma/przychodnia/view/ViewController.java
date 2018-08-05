@@ -175,7 +175,7 @@ public final class ViewController {
         tableView.setHeight(-1);
 
         Queue<Wizyta> wizyty = LekarzManager.getWizyty(lekarz);
-        while (wizyty.isEmpty()) {
+        while (!wizyty.isEmpty()) {
             Wizyta wizyta = wizyty.poll();
             tableView.addRow(
                     wizyta.getId(),
@@ -214,7 +214,7 @@ public final class ViewController {
         tableView.setHeight(-1);
 
         Queue<Wizyta> wizyty = LekarzManager.getWizyty(pacjent);
-        while (wizyty.isEmpty()) {
+        while (!wizyty.isEmpty()) {
             Wizyta wizyta = wizyty.poll();
             tableView.addRow(
                     wizyta.getId(),

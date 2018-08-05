@@ -8,6 +8,9 @@ public final class StringUtils {
     }
 
     public static boolean isNumeric(String value) {
+        if(value == null || value.isEmpty()) {
+            return false;
+        }
         value = value.trim();
         for (char c : value.toCharArray()) {
             if (!Character.isDigit(c)) {
@@ -18,7 +21,7 @@ public final class StringUtils {
     }
 
     public static boolean isPESEL(String value) {
-        if (value == null && value.length() != 11) {
+        if (value == null || value.length() != 11) {
             return false;
         }
         int sum = 0;
