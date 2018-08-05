@@ -206,6 +206,8 @@ public class CSVDataStore implements DataStore {
         File f = getFile(type);
         if (f == null) {
             throw new DataStoreException();
+        } if(!f.exists()) {
+            return null;
         }
         try (BufferedReader r = new BufferedReader(new FileReader(f))) {
             String row;

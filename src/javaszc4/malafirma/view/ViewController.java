@@ -33,8 +33,8 @@ public final class ViewController {
 
         TableView tableView = new TableView(frame)
                 .appendColumn("Id")
-                .appendColumn("Imie", 20)
-                .appendColumn("Nazwisko", 20)
+                .appendColumn("Imie")
+                .appendColumn("Nazwisko")
                 .appendColumn("Pesel", 11)
                 .appendColumn("Telefon", 9)
                 .appendColumn("Adress")
@@ -79,7 +79,7 @@ public final class ViewController {
 
         TableView tableView = new TableView(frame)
                 .appendColumn("Id")
-                .appendColumn("Nazwa", 35)
+                .appendColumn("Nazwa")
                 .appendColumn("Opis");
         tableView.setHeight(-1);
 
@@ -116,7 +116,7 @@ public final class ViewController {
 
         TableView tableView = new TableView(frame)
                 .appendColumn("Id")
-                .appendColumn("Nazwa", 35)
+                .appendColumn("Nazwa")
                 .appendColumn("Opis");
         tableView.setHeight(-1);
 

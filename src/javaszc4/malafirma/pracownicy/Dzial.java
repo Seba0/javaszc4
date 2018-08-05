@@ -58,4 +58,9 @@ public class Dzial extends DataTable {
     public int hashCode() {
         return Objects.hash(nazwa, opis);
     }
+
+    @Override
+    public String toString() {
+        return nazwa;
+    }
 }

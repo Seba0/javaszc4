@@ -1,12 +1,12 @@
-package javaszc4.malafirma.view.form;
+package javaszc4.malafirma.przychodnia.view.forms;
 
-import javaszc4.malafirma.pracownicy.PracownikManager;
+import javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
 import javaszc4.malafirma.utils.StringUtils;
 import javaszc4.malafirma.view.cui.simple.SimpleFormElement;
 
 import java.math.BigInteger;
 
-public enum FormPracownik implements SimpleFormElement {
+public enum FormPacjent implements SimpleFormElement {
     IMIE("Imię"),
     NAZWISKO("Nazwisko"),
     PESEL("Pesel") {
@@ -31,34 +31,14 @@ public enum FormPracownik implements SimpleFormElement {
         }
     },
     ADRES("Adres"),
-    STANOWISKO("Stanowisko") {
+    ID_LEKARZA("Id Lekarza") {
         @Override
         public boolean isValid(String value) {
-            if (!super.isValid(value)) {
+            if (!StringUtils.isNumeric(value)) {
                 return false;
             }
-            if(StringUtils.isNumeric(value)) {
-                long id = Long.parseUnsignedLong(value);
-                if(PracownikManager.getStanowisko(id) != null) {
-                    return true;
-                }
-            }
-            return PracownikManager.getStanowisko(value) != null;
-        }
-    },
-    DZIAL("Dział") {
-        @Override
-        public boolean isValid(String value) {
-            if (!super.isValid(value)) {
-                return false;
-            }
-            if(StringUtils.isNumeric(value)) {
-                long id = Long.parseUnsignedLong(value);
-                if(PracownikManager.getDzial(id) != null) {
-                    return true;
-                }
-            }
-            return PracownikManager.getDzial(value) != null;
+            long id = Long.parseUnsignedLong(value);
+            return LekarzManager.getLekarz(id) != null;
         }
     };
 
@@ -66,7 +46,7 @@ public enum FormPracownik implements SimpleFormElement {
 
     private final String label;
 
-    FormPracownik(String label) {
+    FormPacjent(String label) {
         this.label = label;
     }
 

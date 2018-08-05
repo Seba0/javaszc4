@@ -1,23 +1,20 @@
-package javaszc4.malafirma.pracownicy;
+package javaszc4.malafirma.przychodnia.pracownicy;
 
 import javaszc4.malafirma.datastore.DataTable;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Objects;
 
-public class Pracownik extends DataTable {
+public class Pacjent extends DataTable {
 
     private String imie;
     private String nazwisko;
     private long pesel;
     private long telefon;
     private String adres;
-    private Stanowisko stanowisko;
-    private Dzial dzial;
-
-    public Pracownik() {
-    }
+    private Lekarz lekarz;
 
     public String getImie() {
         return imie;
@@ -59,20 +56,12 @@ public class Pracownik extends DataTable {
         this.adres = adres;
     }
 
-    public Stanowisko getStanowisko() {
-        return stanowisko;
+    public Lekarz getLekarz() {
+        return lekarz;
     }
 
-    public void setStanowisko(Stanowisko stanowisko) {
-        this.stanowisko = stanowisko;
-    }
-
-    public Dzial getDzial() {
-        return dzial;
-    }
-
-    public void setDzial(Dzial dzial) {
-        this.dzial = dzial;
+    public void setLekarz(Lekarz lekarz) {
+        this.lekarz = lekarz;
     }
 
     @Override
@@ -83,8 +72,7 @@ public class Pracownik extends DataTable {
         out.writeLong(pesel);
         out.writeLong(telefon);
         out.writeUTF(adres);
-        out.writeObject(stanowisko);
-        out.writeObject(dzial);
+        out.writeObject(lekarz);
     }
 
     @Override
@@ -95,12 +83,26 @@ public class Pracownik extends DataTable {
         pesel = in.readLong();
         telefon = in.readLong();
         adres = in.readUTF();
-        stanowisko = (Stanowisko) in.readObject();
-        dzial = (Dzial) in.readObject();
+        lekarz = (Lekarz) in.readObject();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pacjent pacjent = (Pacjent) o;
+        return pesel == pacjent.pesel &&
+                Objects.equals(imie, pacjent.imie) &&
+                Objects.equals(nazwisko, pacjent.nazwisko);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imie, nazwisko, pesel);
     }
 
     @Override
     public String toString() {
-        return nazwisko + ' ' + imie + " " + getId();
+        return imie + ' ' + nazwisko + " " + pesel;
     }
 }

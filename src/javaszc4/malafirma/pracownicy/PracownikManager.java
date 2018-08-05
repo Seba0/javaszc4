@@ -53,7 +53,7 @@ public final class PracownikManager {
         return new PracownikBuilder() {
             @Override
             protected Pracownik build(Pracownik pracownik) {
-                if (!addData(pracownik, new PracownikFiltr(pracownik))) {
+                if (!addData(pracownik, new PracownikFiltr<>(pracownik))) {
                     return null;
                 }
                 return pracownik;
@@ -189,6 +189,10 @@ public final class PracownikManager {
         }
         return Collections.EMPTY_LIST;
 
+    }
+
+    public static Pracownik getPracownik(long id) {
+        return getObject(Pracownik.class, id);
     }
 
     public static Stanowisko getStanowisko(long id) {

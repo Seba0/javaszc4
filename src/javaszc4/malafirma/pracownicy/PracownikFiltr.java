@@ -2,16 +2,16 @@ package javaszc4.malafirma.pracownicy;
 
 import javaszc4.malafirma.datastore.DataFilter;
 
-class PracownikFiltr implements DataFilter<Pracownik> {
+public class PracownikFiltr<T extends Pracownik> implements DataFilter<T> {
 
-    private final Pracownik pracownik;
+    private final T pracownik;
 
-    PracownikFiltr(Pracownik pracownik) {
+    public PracownikFiltr(T pracownik) {
         this.pracownik = pracownik;
     }
 
     @Override
-    public boolean accept(Pracownik object) {
+    public boolean accept(T object) {
         return pracownik.getPesel() == object.getPesel();
     }
 

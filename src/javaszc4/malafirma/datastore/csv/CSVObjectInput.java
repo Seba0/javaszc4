@@ -55,7 +55,12 @@ class CSVObjectInput implements ObjectInput {
         } catch (NumberFormatException | ClassNotFoundException | IOException ex) {
             throw new DataStoreCorruptedException(row, ex);
         } finally {
-            row = row.substring(fieldEnd + 1);
+            fieldEnd++;
+            if (row.length() > fieldEnd) {
+                row = row.substring(fieldEnd);
+            } else {
+                row = "";
+            }
         }
     }
 
