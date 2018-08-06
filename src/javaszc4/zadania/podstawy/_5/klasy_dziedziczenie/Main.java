@@ -3,10 +3,6 @@ package javaszc4.zadania.podstawy._5.klasy_dziedziczenie;
 import javaszc4.zadania.podstawy._5.klasy_dziedziczenie.rasy.RasaKota;
 import javaszc4.zadania.podstawy._5.klasy_dziedziczenie.rasy.RasaPsa;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
