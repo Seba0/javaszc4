@@ -1,11 +1,12 @@
 package seba0.javaszc4.malafirma.przychodnia.view.forms;
 
 import java.math.BigInteger;
-import seba0.javaszc4.interfaces.cli.SimpleFormElement;
+
+import seba0.javaszc4.interfaces.cli.CLIFormInput;
 import seba0.javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 
-public enum FormPacjent implements SimpleFormElement {
+public enum FormPacjent implements CLIFormInput {
     IMIE("Imię"),
     NAZWISKO("Nazwisko"),
     PESEL("Pesel") {

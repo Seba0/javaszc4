@@ -1,13 +1,8 @@
 package seba0.javaszc4.malafirma.kadry.view;
 
 
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Scanner;
-import seba0.javaszc4.malafirma.kadry.view.form.FormDzial;
-import seba0.javaszc4.malafirma.kadry.view.form.FormPracownik;
-import seba0.javaszc4.malafirma.kadry.view.form.FormStanowisko;
-import seba0.javaszc4.interfaces.cli.SimpleForm;
+import seba0.javaszc4.interfaces.cli.CLIFormValues;
+import seba0.javaszc4.interfaces.cli.CommandLineInterface;
 import seba0.javaszc4.interfaces.cui.canvas.ViewCanvas;
 import seba0.javaszc4.interfaces.cui.canvas.ViewCanvasImpl;
 import seba0.javaszc4.interfaces.cui.components.FrameView;
@@ -18,12 +13,19 @@ import seba0.javaszc4.malafirma.kadry.pracownicy.Dzial;
 import seba0.javaszc4.malafirma.kadry.pracownicy.Pracownik;
 import seba0.javaszc4.malafirma.kadry.pracownicy.PracownikManager;
 import seba0.javaszc4.malafirma.kadry.pracownicy.Stanowisko;
+import seba0.javaszc4.malafirma.kadry.view.form.FormDzial;
+import seba0.javaszc4.malafirma.kadry.view.form.FormPracownik;
+import seba0.javaszc4.malafirma.kadry.view.form.FormStanowisko;
 import seba0.javaszc4.malafirma.utils.StringUtils;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Scanner;
 
 public final class ViewController {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final SimpleForm FORM = new SimpleForm();
+    private static final CommandLineInterface CLI = new CommandLineInterface();
 
     private ViewController() {
     }
@@ -59,7 +61,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Stanowiska", "Działy", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_PRACOWNIKA;
@@ -95,7 +97,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Pracownicy", "Działy", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_STANOWISKO;
@@ -132,7 +134,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Pracownicy", "Stanowiska", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_DZIAL;
@@ -158,10 +160,10 @@ public final class ViewController {
 
     private static int selectedOption(int last) {
         while (true) {
-            System.out.print("Podaj numer opcji [1-" + last + "]: ");
+            CLI.print("Podaj numer opcji [1-" + last + "]: ");
             int opcja = SCANNER.nextInt();
             if (opcja < 1 || opcja > last) {
-                System.out.println("Wybrano niepoprawny numer opcji");
+                CLI.println("Wybrano niepoprawny numer opcji");
             } else {
                 return opcja;
             }
@@ -172,7 +174,6 @@ public final class ViewController {
         ViewCanvas canvas = new ViewCanvasImpl(100, 30, StandardCharsets.UTF_8);
         ViewType type = ViewType.LISTA_PRACOWNICY;
         long id;
-        String[] fields;
         do {
             try {
                 canvas.clear();
@@ -189,50 +190,50 @@ public final class ViewController {
                         break;
                     case USUN_PRACOWNIKA:
                         type = ViewType.LISTA_PRACOWNICY;
-                        System.out.print("Podaj id pracownika do usunięcia lub 0 aby anulować.\n\tId pracownika: ");
+                        CLI.print("Podaj id pracownika do usunięcia lub 0 aby anulować.\n\tId pracownika: ");
                         id = SCANNER.nextLong();
                         if (id > 0) {
                             if (PracownikManager.deletePracownik(id)) {
-                                System.out.println("Pracownik został usunięty");
+                                CLI.println("Pracownik został usunięty");
                             } else {
-                                System.out.println("Nie udało się usunąć pracownika");
+                                CLI.println("Nie udało się usunąć pracownika");
                             }
                         }
                         break;
                     case USUN_STANOWISKO:
                         type = ViewType.LISTA_STANOWISKA;
-                        System.out.println("Do stanowiska nie mogą być przypisani pracownicy");
-                        System.out.print("Podaj id stanowiska do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
+                        CLI.println("Do stanowiska nie mogą być przypisani pracownicy");
+                        CLI.print("Podaj id stanowiska do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
                         id = SCANNER.nextLong();
                         if (id > 0) {
                             if (PracownikManager.deleteStanowisko(id)) {
-                                System.out.println("Stanowisko zostało usunięty");
+                                CLI.println("Stanowisko zostało usunięty");
                             } else {
-                                System.out.println("Nie udało się usunąć stanowiska");
+                                CLI.println("Nie udało się usunąć stanowiska");
                             }
                         }
                         break;
                     case USUN_DZIAL:
                         type = ViewType.LISTA_DZIALY;
-                        System.out.println("Do działu nie mogą być przypisani pracownicy");
-                        System.out.print("Podaj id działu do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
+                        CLI.println("Do działu nie mogą być przypisani pracownicy");
+                        CLI.print("Podaj id działu do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
                         id = SCANNER.nextLong();
                         if (id > 0) {
                             if (PracownikManager.deleteDzial(id)) {
-                                System.out.println("Dział został usunięty");
+                                CLI.println("Dział został usunięty");
                             } else {
-                                System.out.println("Nie udało się usunąć działu");
+                                CLI.println("Nie udało się usunąć działu");
                             }
                         }
                         break;
                     case DODAJ_PRACOWNIKA:
                         type = ViewType.LISTA_PRACOWNICY;
-                        fields = FORM.printForm(FormPracownik.values());
-                        if (fields == null) {
+                        CLIFormValues<FormPracownik> formPracownik = CLI.printForm(FormPracownik.class);
+                        if (formPracownik == null) {
                             break;
                         }
                         Stanowisko stanowisko = null;
-                        String tmp = fields[FormPracownik.STANOWISKO.ordinal()];
+                        String tmp = formPracownik.getValue(FormPracownik.STANOWISKO);
                         if (StringUtils.isNumeric(tmp)) {
                             stanowisko = PracownikManager.getStanowisko(Long.parseUnsignedLong(tmp));
                         }
@@ -240,7 +241,7 @@ public final class ViewController {
                             stanowisko = PracownikManager.getStanowisko(tmp);
                         }
                         Dzial dzial = null;
-                        tmp = fields[FormPracownik.DZIAL.ordinal()];
+                        tmp = formPracownik.getValue(FormPracownik.DZIAL);
                         if (StringUtils.isNumeric(tmp)) {
                             dzial = PracownikManager.getDzial(Long.parseUnsignedLong(tmp));
                         }
@@ -248,42 +249,40 @@ public final class ViewController {
                             dzial = PracownikManager.getDzial(tmp);
                         }
                         PracownikManager.createPracownik(
-                                fields[FormPracownik.IMIE.ordinal()],
-                                fields[FormPracownik.NAZWISKO.ordinal()],
-                                Long.parseUnsignedLong(fields[FormPracownik.PESEL.ordinal()]))
-                                .telefon(Long.parseUnsignedLong(fields[FormPracownik.TELEFON.ordinal()]))
-                                .adres(fields[FormPracownik.ADRES.ordinal()])
+                                formPracownik.getValue(FormPracownik.IMIE),
+                                formPracownik.getValue(FormPracownik.NAZWISKO),
+                                Long.parseUnsignedLong(formPracownik.getValue(FormPracownik.PESEL)))
+                                .telefon(Long.parseUnsignedLong(formPracownik.getValue(FormPracownik.TELEFON)))
+                                .adres(formPracownik.getValue(FormPracownik.ADRES))
                                 .stanowisko(stanowisko)
                                 .dzial(dzial)
                                 .build();
                         break;
                     case DODAJ_STANOWISKO:
                         type = ViewType.LISTA_STANOWISKA;
-                        fields = FORM.printForm(FormStanowisko.values());
-                        if (fields == null) {
+                        CLIFormValues<FormStanowisko> formStanowisko = CLI.printForm(FormStanowisko.class);
+                        if (formStanowisko == null) {
                             break;
                         }
                         PracownikManager.createStanowisko(
-                                fields[FormStanowisko.NAZWA.ordinal()],
-                                fields[FormStanowisko.OPIS.ordinal()]
-                        );
+                                formStanowisko.getValue(FormStanowisko.NAZWA),
+                                formStanowisko.getValue(FormStanowisko.OPIS));
                         break;
                     case DODAJ_DZIAL:
                         type = ViewType.LISTA_DZIALY;
-                        fields = FORM.printForm(FormDzial.values());
-                        if (fields == null) {
+                        CLIFormValues<FormDzial> formDzial = CLI.printForm(FormDzial.class);
+                        if (formDzial == null) {
                             break;
                         }
                         PracownikManager.createDzial(
-                                fields[FormDzial.NAZWA.ordinal()],
-                                fields[FormDzial.OPIS.ordinal()]
-                        );
+                                formDzial.getValue(FormDzial.NAZWA),
+                                formDzial.getValue(FormDzial.OPIS));
                         break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } while (type != ViewType.ZAKONCZ);
-        System.out.println("Program zakończył działanie...");
+        CLI.println("Program zakończył działanie...");
     }
 }

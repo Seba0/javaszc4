@@ -1,15 +1,8 @@
 package seba0.javaszc4.malafirma.przychodnia.view;
 
 
-import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Queue;
-import java.util.Scanner;
-import seba0.javaszc4.malafirma.utils.StringUtils;
-import seba0.javaszc4.interfaces.cli.SimpleForm;
+import seba0.javaszc4.interfaces.cli.CLIFormValues;
+import seba0.javaszc4.interfaces.cli.CommandLineInterface;
 import seba0.javaszc4.interfaces.cui.canvas.ViewCanvas;
 import seba0.javaszc4.interfaces.cui.canvas.ViewCanvasImpl;
 import seba0.javaszc4.interfaces.cui.components.FrameView;
@@ -24,11 +17,18 @@ import seba0.javaszc4.malafirma.przychodnia.view.forms.FormFiltrWizyty;
 import seba0.javaszc4.malafirma.przychodnia.view.forms.FormLekarz;
 import seba0.javaszc4.malafirma.przychodnia.view.forms.FormPacjent;
 import seba0.javaszc4.malafirma.przychodnia.view.forms.FormWizyta;
+import seba0.javaszc4.malafirma.utils.StringUtils;
+
+import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Queue;
 
 public final class ViewController {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final SimpleForm FORM = new SimpleForm();
+    private static final CommandLineInterface CLI = new CommandLineInterface();
 
     private static final DateFormat FORMAT = new SimpleDateFormat("yy-MM-dd HH:mm");
 
@@ -66,7 +66,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Wizyty", "Pacjenci", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_LEKARZA;
@@ -110,7 +110,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Wizyty", "Lekarze", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_PACJENTA;
@@ -148,7 +148,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Filtruj", "Pacjenci", "Lekarze", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_WIZYTE;
@@ -187,7 +187,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Wszystkie", "Pacjenci", "Lekarze", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_WIZYTE;
@@ -226,7 +226,7 @@ public final class ViewController {
         createMenu(frame, "Dodaj", "Usuń", "Wszystkie", "Pacjenci", "Lekarze", "Wyjście");
 
         frame.draw(canvas);
-        System.out.println(canvas);
+        CLI.println(canvas);
         switch (selectedOption(5)) {
             case 1:
                 return ViewType.DODAJ_WIZYTE;
@@ -253,10 +253,10 @@ public final class ViewController {
 
     private static int selectedOption(int last) {
         while (true) {
-            System.out.print("Podaj numer opcji [1-" + last + "]: ");
-            int opcja = SCANNER.nextInt();
+            CLI.print("Podaj numer opcji [1-" + last + "]: ");
+            int opcja = CLI.nextInt();
             if (opcja < 1 || opcja > last) {
-                System.out.println("Wybrano niepoprawny numer opcji");
+                CLI.println("Wybrano niepoprawny numer opcji");
             } else {
                 return opcja;
             }
@@ -268,7 +268,6 @@ public final class ViewController {
         ViewType type = ViewType.LISTA_WIZYT;
         long id = -1;
         String tmp;
-        String[] fields;
         Lekarz lekarz = null;
         Pacjent pacjent = null;
         do {
@@ -302,12 +301,11 @@ public final class ViewController {
                         break;
                     case FILTR_WIZYTY:
                         type = ViewType.LISTA_WIZYT;
-                        fields = FORM.printForm(FormFiltrWizyty.values());
-
-                        if (fields == null) {
+                        CLIFormValues<FormFiltrWizyty> formFiltrWizyt = CLI.printForm(FormFiltrWizyty.class);
+                        if (formFiltrWizyt == null) {
                             break;
                         }
-                        tmp = fields[FormFiltrWizyty.ID_PESEL.ordinal()];
+                        tmp = formFiltrWizyt.getValue(FormFiltrWizyty.ID_PESEL);
                         if (!StringUtils.isNumeric(tmp)) {
                             break;
                         }
@@ -326,82 +324,82 @@ public final class ViewController {
                         break;
                     case USUN_LEKARZA:
                         type = ViewType.LISTA_LEKARZY;
-                        System.out.println("Do lekarz nie mogą być przypisani pacjenci i wizyty");
-                        System.out.print("Podaj id lekarza do usunięcia lub 0 aby anulować.\n\tId pekarza: ");
-                        id = SCANNER.nextLong();
+                        CLI.println("Do lekarz nie mogą być przypisani pacjenci i wizyty");
+                        CLI.print("Podaj id lekarza do usunięcia lub 0 aby anulować.\n\tId pekarza: ");
+                        id = CLI.nextLong();
                         if (id > 0) {
                             if (LekarzManager.deleteLekarz(id)) {
-                                System.out.println("Lekarz został usunięty");
+                                CLI.println("Lekarz został usunięty");
                             } else {
-                                System.out.println("Nie udało się usunąć lekarza");
+                                CLI.println("Nie udało się usunąć lekarza");
                             }
                         }
                         break;
                     case USUN_PACJENTA:
                         type = ViewType.LISTA_PACJENTOW;
-                        System.out.println("Do pacjenta nie mogą być przypisane wizyty");
-                        System.out.print("Podaj id pacjenta do usunięcia lub 0 aby anulować.\n\tId pacjenta: ");
-                        id = SCANNER.nextLong();
+                        CLI.println("Do pacjenta nie mogą być przypisane wizyty");
+                        CLI.print("Podaj id pacjenta do usunięcia lub 0 aby anulować.\n\tId pacjenta: ");
+                        id = CLI.nextLong();
                         if (id > 0) {
                             if (LekarzManager.deletePacjent(id)) {
-                                System.out.println("Pacjent zostało usunięty");
+                                CLI.println("Pacjent zostało usunięty");
                             } else {
-                                System.out.println("Nie udało się usunąć pacjenta");
+                                CLI.println("Nie udało się usunąć pacjenta");
                             }
                         }
                         break;
                     case USUN_WIZYTE:
                         type = ViewType.USUN_WIZYTE;
-                        System.out.println("Wizyta musi być z dataą przyszłą");
-                        System.out.print("Podaj id wizyty do usunięcia lub 0 aby anulować.\n\tId wizyty: ");
-                        id = SCANNER.nextLong();
+                        CLI.println("Wizyta musi być z dataą przyszłą");
+                        CLI.print("Podaj id wizyty do usunięcia lub 0 aby anulować.\n\tId wizyty: ");
+                        id = CLI.nextLong();
                         if (id > 0) {
                             if (LekarzManager.deleteWizyta(id)) {
-                                System.out.println("Dział został usunięty");
+                                CLI.println("Dział został usunięty");
                             } else {
-                                System.out.println("Nie udało się usunąć działu");
+                                CLI.println("Nie udało się usunąć działu");
                             }
                         }
                         break;
                     case DODAJ_LEKARZA:
                         type = ViewType.LISTA_LEKARZY;
-                        fields = FORM.printForm(FormLekarz.values());
-                        if (fields == null) {
+                        CLIFormValues<FormLekarz> formLekarz = CLI.printForm(FormLekarz.class);
+                        if (formLekarz == null) {
                             break;
                         }
-                        id = Long.parseUnsignedLong(fields[FormLekarz.ID_PRACOWNIKA.ordinal()]);
+                        id = Long.parseUnsignedLong(formLekarz.getValue(FormLekarz.ID_PRACOWNIKA));
                         if (LekarzManager.createLekarz(id) == null) {
-                            System.out.println("Nie udało się dodać lekarza");
+                            CLI.println("Nie udało się dodać lekarza");
                         }
                         break;
                     case DODAJ_PACJENTA:
                         type = ViewType.LISTA_PACJENTOW;
-                        fields = FORM.printForm(FormPacjent.values());
-                        if (fields == null) {
+                        CLIFormValues<FormPacjent> formPacjent = CLI.printForm(FormPacjent.class);
+                        if (formPacjent == null) {
                             break;
                         }
-                        tmp = fields[FormPacjent.ID_LEKARZA.ordinal()];
+                        tmp = formPacjent.getValue(FormPacjent.ID_LEKARZA);
                         id = Long.parseUnsignedLong(tmp);
                         lekarz = LekarzManager.getLekarz(id);
                         LekarzManager.createPacjent(
-                                fields[FormPacjent.IMIE.ordinal()],
-                                fields[FormPacjent.NAZWISKO.ordinal()],
-                                Long.parseUnsignedLong(fields[FormPacjent.PESEL.ordinal()]))
-                                .telefon(Long.parseUnsignedLong(fields[FormPacjent.TELEFON.ordinal()]))
-                                .adres(fields[FormPacjent.ADRES.ordinal()])
+                                formPacjent.getValue(FormPacjent.IMIE),
+                                formPacjent.getValue(FormPacjent.NAZWISKO),
+                                Long.parseUnsignedLong(formPacjent.getValue(FormPacjent.PESEL)))
+                                .telefon(Long.parseUnsignedLong(formPacjent.getValue(FormPacjent.TELEFON)))
+                                .adres(formPacjent.getValue(FormPacjent.ADRES))
                                 .lekarz(lekarz)
                                 .build();
                         break;
                     case DODAJ_WIZYTE:
                         type = ViewType.LISTA_WIZYT;
-                        fields = FORM.printForm(FormWizyta.values());
-                        if (fields == null) {
+                        CLIFormValues<FormWizyta> formWizyta = CLI.printForm(FormWizyta.class);
+                        if (formWizyta == null) {
                             break;
                         }
-                        Date data = FORMAT.parse(fields[FormWizyta.DATA_WIZYTY.ordinal()]);
-                        tmp = fields[FormWizyta.ID_LEKARZA.ordinal()];
+                        Date data = FORMAT.parse(formWizyta.getValue(FormWizyta.DATA_WIZYTY));
+                        tmp = formWizyta.getValue(FormWizyta.ID_LEKARZA);
                         lekarz = LekarzManager.getLekarz(Long.parseUnsignedLong(tmp));
-                        tmp = fields[FormWizyta.PESEL_PACJENTA.ordinal()];
+                        tmp = formWizyta.getValue(FormWizyta.PESEL_PACJENTA);
                         pacjent = LekarzManager.getPacjent(Long.parseUnsignedLong(tmp));
                         LekarzManager.createWizyta(data, pacjent, lekarz);
                         break;
@@ -410,6 +408,6 @@ public final class ViewController {
                 e.printStackTrace();
             }
         } while (type != ViewType.ZAKONCZ);
-        System.out.println("Program zakończył działanie...");
+        CLI.println("Program zakończył działanie...");
     }
 }

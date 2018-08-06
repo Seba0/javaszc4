@@ -1,10 +1,10 @@
 package seba0.javaszc4.malafirma.przychodnia.view.forms;
 
+import seba0.javaszc4.interfaces.cli.CLIFormInput;
 import seba0.javaszc4.malafirma.utils.StringUtils;
-import seba0.javaszc4.interfaces.cli.SimpleFormElement;
 import seba0.javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
 
-public enum FormFiltrWizyty implements SimpleFormElement {
+public enum FormFiltrWizyty implements CLIFormInput {
     ID_PESEL("ID Lekarza lub PESEL Pacjenta") {
         @Override
         public boolean isValid(String value) {

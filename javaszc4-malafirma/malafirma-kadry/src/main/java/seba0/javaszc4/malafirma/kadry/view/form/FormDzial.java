@@ -1,10 +1,10 @@
 package seba0.javaszc4.malafirma.kadry.view.form;
 
-import seba0.javaszc4.interfaces.cli.SimpleFormElement;
+import seba0.javaszc4.interfaces.cli.CLIFormInput;
 import seba0.javaszc4.malafirma.kadry.pracownicy.PracownikManager;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 
-public enum FormDzial implements SimpleFormElement {
+public enum FormDzial implements CLIFormInput {
     NAZWA("Nazwa") {
         @Override
         public boolean isValid(String value) {

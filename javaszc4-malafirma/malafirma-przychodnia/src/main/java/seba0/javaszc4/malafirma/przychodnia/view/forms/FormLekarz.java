@@ -1,10 +1,10 @@
 package seba0.javaszc4.malafirma.przychodnia.view.forms;
 
+import seba0.javaszc4.interfaces.cli.CLIFormInput;
 import seba0.javaszc4.malafirma.utils.StringUtils;
-import seba0.javaszc4.interfaces.cli.SimpleFormElement;
 import seba0.javaszc4.malafirma.kadry.pracownicy.PracownikManager;
 
-public enum FormLekarz implements SimpleFormElement {
+public enum FormLekarz implements CLIFormInput {
     ID_PRACOWNIKA("Id Pracownika") {
         @Override
         public boolean isValid(String value) {
