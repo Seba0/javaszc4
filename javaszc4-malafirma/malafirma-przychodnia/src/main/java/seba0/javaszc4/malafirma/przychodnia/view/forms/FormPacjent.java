@@ -1,7 +1,7 @@
 package seba0.javaszc4.malafirma.przychodnia.view.forms;
 
 import java.math.BigInteger;
-import seba0.javaszc4.malafirma.cli.SimpleFormElement;
+import seba0.javaszc4.interfaces.cli.SimpleFormElement;
 import seba0.javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 

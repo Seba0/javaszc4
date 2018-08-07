@@ -1,4 +1,4 @@
-package seba0.javaszc4.malafirma.cui.canvas;
+package seba0.javaszc4.interfaces.cui.canvas;
 
 import java.nio.charset.Charset;
 

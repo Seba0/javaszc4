@@ -1,6 +1,6 @@
 package seba0.javaszc4.malafirma.kadry.view.form;
 
-import seba0.javaszc4.malafirma.cli.SimpleFormElement;
+import seba0.javaszc4.interfaces.cli.SimpleFormElement;
 import seba0.javaszc4.malafirma.kadry.pracownicy.PracownikManager;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 

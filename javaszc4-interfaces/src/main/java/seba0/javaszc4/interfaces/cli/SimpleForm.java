@@ -1,4 +1,4 @@
-package seba0.javaszc4.malafirma.cli;
+package seba0.javaszc4.interfaces.cli;
 
 import java.io.InputStream;
 import java.io.PrintStream;

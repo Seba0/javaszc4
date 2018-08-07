@@ -1,7 +1,7 @@
 package seba0.javaszc4.malafirma.przychodnia.view.forms;
 
 import seba0.javaszc4.malafirma.utils.StringUtils;
-import seba0.javaszc4.malafirma.cli.SimpleFormElement;
+import seba0.javaszc4.interfaces.cli.SimpleFormElement;
 import seba0.javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
 
 public enum FormFiltrWizyty implements SimpleFormElement {

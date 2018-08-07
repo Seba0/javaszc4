@@ -6,7 +6,6 @@
         <artifactId>javaszc4</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>seba0.javaszc4</groupId>
     <artifactId>malafirma</artifactId>
     <packaging>pom</packaging>
     <name>Mała Firma</name>

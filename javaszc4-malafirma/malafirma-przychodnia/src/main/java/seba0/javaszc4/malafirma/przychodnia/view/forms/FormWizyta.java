@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import seba0.javaszc4.malafirma.utils.StringUtils;
-import seba0.javaszc4.malafirma.cli.SimpleFormElement;
+import seba0.javaszc4.interfaces.cli.SimpleFormElement;
 import seba0.javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
 
 public enum FormWizyta implements SimpleFormElement {

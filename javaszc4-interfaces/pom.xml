@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>seba0.javaszc4</groupId>
+        <artifactId>javaszc4</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>javaszc4-interfaces</artifactId>
+    <packaging>jar</packaging>
+    <name>JavaSzc4 Interfaces</name>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <classesDirectory>${project.build.directory}/classes</classesDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>package-cli</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <classifier>cli</classifier>
+                            <includes>
+                                <include>seba0/javaszc4/interfaces/cli/**/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>package-cui</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <classifier>cui</classifier>
+                            <includes>
+                                <include>seba0/javaszc4/interfaces/cui/**/*</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

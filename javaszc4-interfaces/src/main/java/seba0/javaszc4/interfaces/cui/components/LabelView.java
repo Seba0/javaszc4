@@ -1,6 +1,6 @@
-package seba0.javaszc4.malafirma.cui.components;
+package seba0.javaszc4.interfaces.cui.components;
 
-import seba0.javaszc4.malafirma.cui.canvas.ViewCanvas;
+import seba0.javaszc4.interfaces.cui.canvas.ViewCanvas;
 
 /**
  *
