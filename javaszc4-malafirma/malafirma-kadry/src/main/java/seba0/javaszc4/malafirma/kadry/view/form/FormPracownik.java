@@ -2,9 +2,13 @@ package seba0.javaszc4.malafirma.kadry.view.form;
 
 import seba0.javaszc4.interfaces.cli.CLIFormInput;
 import seba0.javaszc4.malafirma.kadry.pracownicy.PracownikManager;
+import seba0.javaszc4.malafirma.utils.PESELUtils;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 
 import java.math.BigInteger;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public enum FormPracownik implements CLIFormInput {
     IMIE("Imię"),
@@ -12,7 +16,22 @@ public enum FormPracownik implements CLIFormInput {
     PESEL("Pesel") {
         @Override
         public boolean isValid(String value) {
-            return StringUtils.isPESEL(value);
+            Date dataUrodzenia = PESELUtils.getDataUrodzenia(value);
+            if (dataUrodzenia == null) {
+                return false;
+            }
+            Calendar c = GregorianCalendar.getInstance();
+            c.setTime(dataUrodzenia);
+            c.add(Calendar.YEAR, 18);
+            Date time = c.getTime();
+            Date d = new Date();
+            if (time.after(d)) {
+                return false;
+            }
+            c.setTime(dataUrodzenia);
+            c.add(Calendar.YEAR, -90);
+            time = c.getTime();
+            return time.before(d);
         }
     },
     TELEFON("Telefon") {
@@ -37,9 +56,9 @@ public enum FormPracownik implements CLIFormInput {
             if (!super.isValid(value)) {
                 return false;
             }
-            if(StringUtils.isNumeric(value)) {
+            if (StringUtils.isNumeric(value)) {
                 long id = Long.parseUnsignedLong(value);
-                if(PracownikManager.getStanowisko(id) != null) {
+                if (PracownikManager.getStanowisko(id) != null) {
                     return true;
                 }
             }
@@ -52,9 +71,9 @@ public enum FormPracownik implements CLIFormInput {
             if (!super.isValid(value)) {
                 return false;
             }
-            if(StringUtils.isNumeric(value)) {
+            if (StringUtils.isNumeric(value)) {
                 long id = Long.parseUnsignedLong(value);
-                if(PracownikManager.getDzial(id) != null) {
+                if (PracownikManager.getDzial(id) != null) {
                     return true;
                 }
             }

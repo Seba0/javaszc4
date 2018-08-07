@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import seba0.javaszc4.interfaces.cli.CLIFormInput;
 import seba0.javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
+import seba0.javaszc4.malafirma.utils.PESELUtils;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 
 public enum FormPacjent implements CLIFormInput {
@@ -12,7 +13,7 @@ public enum FormPacjent implements CLIFormInput {
     PESEL("Pesel") {
         @Override
         public boolean isValid(String value) {
-            return StringUtils.isPESEL(value);
+            return PESELUtils.isPESEL(value);
         }
     },
     TELEFON("Telefon") {

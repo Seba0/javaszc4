@@ -161,7 +161,7 @@ public final class PracownikManager {
             }
             Collection rows = dataStore.select(Pracownik.class, new PracownikDzialFiltr(dzial));
             if (rows.isEmpty()) {
-                return deleteTable(Stanowisko.class, id);
+                return deleteTable(Dzial.class, id);
             }
         } catch (Exception e) {
             e.printStackTrace();

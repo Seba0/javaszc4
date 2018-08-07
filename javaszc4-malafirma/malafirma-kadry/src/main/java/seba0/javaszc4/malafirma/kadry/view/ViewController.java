@@ -19,12 +19,10 @@ import seba0.javaszc4.malafirma.kadry.view.form.FormStanowisko;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Scanner;
+import java.util.*;
 
 public final class ViewController {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
     private static final CommandLineInterface CLI = new CommandLineInterface();
 
     private ViewController() {
@@ -57,12 +55,16 @@ public final class ViewController {
                     pracownik.getDzial()
             );
         }
-
-        createMenu(frame, "Dodaj", "Usuń", "Stanowiska", "Działy", "Wyjście");
+        boolean disabled = pracownicy.isEmpty();
+        createMenu(frame, "Dodaj", disabled ? null : "Usuń", "Stanowiska", "Działy", "Wyjście");
 
         frame.draw(canvas);
         CLI.println(canvas);
-        switch (selectedOption(5)) {
+        List<Integer> disabledList = new ArrayList<>();
+        if (disabled) {
+            disabledList.add(2);
+        }
+        switch (selectedOption(5, disabledList)) {
             case 1:
                 return ViewType.DODAJ_PRACOWNIKA;
             case 2:
@@ -93,12 +95,16 @@ public final class ViewController {
                     stanowisko.getOpis()
             );
         }
-
-        createMenu(frame, "Dodaj", "Usuń", "Pracownicy", "Działy", "Wyjście");
+        boolean disabled = stanowiska.isEmpty();
+        createMenu(frame, "Dodaj", disabled ? null : "Usuń", "Pracownicy", "Działy", "Wyjście");
 
         frame.draw(canvas);
         CLI.println(canvas);
-        switch (selectedOption(5)) {
+        List<Integer> disabledList = new ArrayList<>();
+        if (disabled) {
+            disabledList.add(2);
+        }
+        switch (selectedOption(5, disabledList)) {
             case 1:
                 return ViewType.DODAJ_STANOWISKO;
             case 2:
@@ -111,7 +117,6 @@ public final class ViewController {
                 return ViewType.ZAKONCZ;
         }
     }
-
 
     private static ViewType showDzialy(ViewCanvas canvas) {
         FrameView frame = new FrameView("Działy");
@@ -130,12 +135,16 @@ public final class ViewController {
                     dzial.getOpis()
             );
         }
-
-        createMenu(frame, "Dodaj", "Usuń", "Pracownicy", "Stanowiska", "Wyjście");
+        boolean disabled = dzialy.isEmpty();
+        createMenu(frame, "Dodaj", disabled ? null : "Usuń", "Pracownicy", "Stanowiska", "Wyjście");
 
         frame.draw(canvas);
         CLI.println(canvas);
-        switch (selectedOption(5)) {
+        List<Integer> disabledList = new ArrayList<>();
+        if (disabled) {
+            disabledList.add(2);
+        }
+        switch (selectedOption(5, disabledList)) {
             case 1:
                 return ViewType.DODAJ_DZIAL;
             case 2:
@@ -153,19 +162,30 @@ public final class ViewController {
         ViewContainer container = new ViewContainer(frame, false);
         container.setHeight(1);
         for (int i = 0; i < options.length; i++) {
-            new LabelView(container, (i + 1) + ": " + options[i]).setHeight(1);
+            String text = options[i] == null ? "" : (i + 1) + ": " + options[i];
+            new LabelView(container, text).setHeight(1);
         }
     }
 
 
     private static int selectedOption(int last) {
+        return selectedOption(last, Collections.EMPTY_LIST);
+    }
+
+    private static int selectedOption(int last, List<Integer> disabled) {
         while (true) {
             CLI.print("Podaj numer opcji [1-" + last + "]: ");
-            int opcja = SCANNER.nextInt();
-            if (opcja < 1 || opcja > last) {
+            try {
+                int opcja = CLI.nextInt();
+
+                if (opcja < 1 || opcja > last || disabled.contains(opcja)) {
+                    CLI.println("Wybrano niepoprawny numer opcji");
+                } else {
+                    return opcja;
+                }
+            } catch (InputMismatchException e) {
+                CLI.nextLine();
                 CLI.println("Wybrano niepoprawny numer opcji");
-            } else {
-                return opcja;
             }
         }
     }
@@ -191,7 +211,7 @@ public final class ViewController {
                     case USUN_PRACOWNIKA:
                         type = ViewType.LISTA_PRACOWNICY;
                         CLI.print("Podaj id pracownika do usunięcia lub 0 aby anulować.\n\tId pracownika: ");
-                        id = SCANNER.nextLong();
+                        id = CLI.nextLong();
                         if (id > 0) {
                             if (PracownikManager.deletePracownik(id)) {
                                 CLI.println("Pracownik został usunięty");
@@ -204,7 +224,7 @@ public final class ViewController {
                         type = ViewType.LISTA_STANOWISKA;
                         CLI.println("Do stanowiska nie mogą być przypisani pracownicy");
                         CLI.print("Podaj id stanowiska do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
-                        id = SCANNER.nextLong();
+                        id = CLI.nextLong();
                         if (id > 0) {
                             if (PracownikManager.deleteStanowisko(id)) {
                                 CLI.println("Stanowisko zostało usunięty");
@@ -216,8 +236,8 @@ public final class ViewController {
                     case USUN_DZIAL:
                         type = ViewType.LISTA_DZIALY;
                         CLI.println("Do działu nie mogą być przypisani pracownicy");
-                        CLI.print("Podaj id działu do usunięcia lub 0 aby anulować.\n\tId stanowisko: ");
-                        id = SCANNER.nextLong();
+                        CLI.print("Podaj id działu do usunięcia lub 0 aby anulować.\n\tId działu: ");
+                        id = CLI.nextLong();
                         if (id > 0) {
                             if (PracownikManager.deleteDzial(id)) {
                                 CLI.println("Dział został usunięty");
