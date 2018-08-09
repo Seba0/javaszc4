@@ -7,6 +7,7 @@ import java.util.Date;
 import seba0.javaszc4.interfaces.cli.CLIFormInput;
 import seba0.javaszc4.malafirma.utils.StringUtils;
 import seba0.javaszc4.malafirma.przychodnia.pracownicy.LekarzManager;
+import seba0.javaszc4.malafirma.utils.PESELUtils;
 
 public enum FormWizyta implements CLIFormInput {
     ID_LEKARZA("Id Lekarza") {
@@ -22,7 +23,7 @@ public enum FormWizyta implements CLIFormInput {
     PESEL_PACJENTA("PESEL Pacjenta") {
         @Override
         public boolean isValid(String value) {
-            if (!StringUtils.isPESEL(value)) {
+            if (!PESELUtils.isPESEL(value)) {
                 return false;
             }
             long id = Long.parseUnsignedLong(value);

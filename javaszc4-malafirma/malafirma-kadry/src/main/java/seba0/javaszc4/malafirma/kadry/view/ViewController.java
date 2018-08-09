@@ -1,6 +1,5 @@
 package seba0.javaszc4.malafirma.kadry.view;
 
-
 import seba0.javaszc4.interfaces.cli.CLIFormValues;
 import seba0.javaszc4.interfaces.cli.CommandLineInterface;
 import seba0.javaszc4.interfaces.cui.canvas.ViewCanvas;
@@ -55,13 +54,17 @@ public final class ViewController {
                     pracownik.getDzial()
             );
         }
-        boolean disabled = pracownicy.isEmpty();
-        createMenu(frame, "Dodaj", disabled ? null : "Usuń", "Stanowiska", "Działy", "Wyjście");
+        boolean dodajDisabled = PracownikManager.getDzial().isEmpty() || PracownikManager.getStanowisko().isEmpty();
+        boolean usunDisabled = pracownicy.isEmpty();
+        createMenu(frame, dodajDisabled ? null : "Dodaj", usunDisabled ? null : "Usuń", "Stanowiska", "Działy", "Wyjście");
 
         frame.draw(canvas);
         CLI.println(canvas);
         List<Integer> disabledList = new ArrayList<>();
-        if (disabled) {
+        if (dodajDisabled) {
+            disabledList.add(1);
+        }
+        if (usunDisabled) {
             disabledList.add(2);
         }
         switch (selectedOption(5, disabledList)) {
@@ -166,7 +169,6 @@ public final class ViewController {
             new LabelView(container, text).setHeight(1);
         }
     }
-
 
     private static int selectedOption(int last) {
         return selectedOption(last, Collections.EMPTY_LIST);
@@ -299,8 +301,8 @@ public final class ViewController {
                                 formDzial.getValue(FormDzial.OPIS));
                         break;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (InputMismatchException e) {
+                CLI.println("Niepoprawna wartość");
             }
         } while (type != ViewType.ZAKONCZ);
         CLI.println("Program zakończył działanie...");

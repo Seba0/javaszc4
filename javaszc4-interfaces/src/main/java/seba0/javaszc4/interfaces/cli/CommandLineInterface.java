@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.util.*;
 
 public final class CommandLineInterface {
+
     private static final List<String> YES
             = Arrays.asList("y", "yes", "t", "tak");
     private static final List<String> NO
@@ -23,7 +24,6 @@ public final class CommandLineInterface {
     public CommandLineInterface() {
         this(System.in, System.out);
     }
-
 
     public synchronized <T extends Enum<? extends CLIFormInput>> CLIFormValues<T> printForm(Class<T> form) {
         CLIFormInput[] elements = (CLIFormInput[]) form.getEnumConstants();
@@ -99,6 +99,32 @@ public final class CommandLineInterface {
             } catch (Exception e) {
             }
             out.println("Błędny numer opcji");
+        }
+    }
+
+    public int nextOption(final int last, int[] disabled) {
+        Arrays.sort(disabled);
+        out.print("Podaj numer opcji [1-" + last + "]: ");
+        while (true) {
+            try {
+                long start = System.currentTimeMillis();
+                if (scanner.hasNext()) {
+                    if (System.currentTimeMillis() - start < 1) {
+                        continue;
+                    }
+                    int opcja = scanner.nextInt();
+                    if (opcja < 1 || opcja > last) {
+                        out.println("Wybrano niepoprawny numer opcji");
+                    } else if (Arrays.binarySearch(disabled, opcja) >= 0) {
+                        out.println("Ta opcja jest w tym momencie niedozwolona");
+                    } else {
+                        return opcja;
+                    }
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                out.println("Wybrano niepoprawny numer opcji");
+            }
         }
     }
 
@@ -205,4 +231,5 @@ public final class CommandLineInterface {
     public BigDecimal nextBigDecimal() {
         return scanner.nextBigDecimal();
     }
+
 }

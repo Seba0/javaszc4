@@ -1,6 +1,5 @@
 package seba0.javaszc4.malafirma.przychodnia.view;
 
-
 import seba0.javaszc4.interfaces.cli.CLIFormValues;
 import seba0.javaszc4.interfaces.cli.CommandLineInterface;
 import seba0.javaszc4.interfaces.cui.canvas.ViewCanvas;
@@ -25,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Queue;
+import seba0.javaszc4.malafirma.utils.PESELUtils;
 
 public final class ViewController {
 
@@ -310,7 +310,7 @@ public final class ViewController {
                             break;
                         }
                         id = Long.parseUnsignedLong(tmp);
-                        if (StringUtils.isPESEL(tmp)) {
+                        if (PESELUtils.isPESEL(tmp)) {
                             pacjent = LekarzManager.getPacjent(id);
                             if (pacjent != null) {
                                 type = ViewType.LISTA_WIZYT_PACJENTA;
