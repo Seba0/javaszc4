@@ -7,6 +7,7 @@
     <packaging>pom</packaging>
     <name>JavaSzc4</name>
     <modules>
+        <module>zadanie</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
