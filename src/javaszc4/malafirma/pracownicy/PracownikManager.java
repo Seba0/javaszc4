@@ -20,6 +20,7 @@ public final class PracownikManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //TODO pięknie ;)
         return Collections.EMPTY_LIST;
     }
 
@@ -35,6 +36,7 @@ public final class PracownikManager {
         return getCollection(Stanowisko.class);
     }
 
+    //TODO Duplikacja z LekarzManager
     private static <T extends DataTable> boolean addData(T table, DataFilter<T> filter) {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");

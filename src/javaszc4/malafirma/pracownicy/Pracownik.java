@@ -19,6 +19,8 @@ public class Pracownik extends DataTable {
     public Pracownik() {
     }
 
+    //TODO przydałby się jakiś konstruktor z parametrami
+
     public String getImie() {
         return imie;
     }

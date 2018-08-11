@@ -12,6 +12,7 @@ import java.util.*;
 
 public final class LekarzManager {
 
+    //TODO ja nie lubię pustych konstruktorów ale wiem po co on jest ;)
     private LekarzManager() {
     }
 
@@ -49,8 +50,10 @@ public final class LekarzManager {
         return new LinkedList<>(getCollection(Wizyta.class, new WizytaPacjentFiltr(pacjent)));
     }
 
+    //TODO duplikacja metody z PracownikManager
     private static <T extends DataTable> boolean addData(T table, DataFilter<T> filter) {
         try {
+            //TODO napis "malafirma" przeniósłbym do jakiegoś const (użyłeś go 8 razy w tej klasie)
             DataStore dataStore = DataStoreManager.openStore("malafirma");
             Collection<T> rows = dataStore.select(table.getClass(), filter);
             if (!rows.isEmpty()) {
@@ -63,6 +66,7 @@ public final class LekarzManager {
         return false;
     }
 
+    //TODO pomyślałbym nad Builder
     public static Lekarz createLekarz(long idPracownika) {
         Pracownik pracownik = PracownikManager.getPracownik(idPracownika);
         Lekarz lekarz = new Lekarz();
@@ -101,6 +105,7 @@ public final class LekarzManager {
         wizyta.setLekarz(lekarz);
         wizyta.setPacjent(pacjent);
         if (!addData(wizyta, new WizytaFilter(wizyta))) {
+            //TODO czy na pewno musimy zwrócić null ?
             return null;
         }
         return wizyta;
@@ -116,6 +121,7 @@ public final class LekarzManager {
         return false;
     }
 
+    //TODO fajnie widzę, że umiesz generyki
     private static boolean deleteTable(Class<? extends DataTable> table, long id) {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");
@@ -180,6 +186,7 @@ public final class LekarzManager {
         return false;
     }
 
+    //TODO te dwie metody getObject rozbiłbym na jeszcze 3, która by posiadała część wspólną tych 2 metod
     private static <T extends DataTable> T getObject(Class<T> table, long id) {
         try {
             DataStore dataStore = DataStoreManager.openStore("malafirma");
