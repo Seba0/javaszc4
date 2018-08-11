@@ -44,6 +44,7 @@ public abstract class PacjentBuilder {
 
     protected abstract Pacjent build(Pacjent pacjent);
 
+    //TODO pomyślałbym nad inną implementacją build
     public Pacjent build() {
         Pacjent pacjent = new Pacjent();
         pacjent.setImie(imie);
