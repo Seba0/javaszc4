@@ -11,14 +11,14 @@ import java.util.Base64;
 /**
  * @author sebastian
  */
-class CSVObjectInput implements ObjectInput {
+final class CSVObjectInput implements ObjectInput {
 
     private String row;
     private final DataStore store;
     private static final String NULL = "NULL";
     private static final String BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
-    public CSVObjectInput(String row, DataStore store) {
+    CSVObjectInput(String row, DataStore store) {
         this.row = row;
         this.store = store;
     }
@@ -43,7 +43,7 @@ class CSVObjectInput implements ObjectInput {
             return null;
         }
         int classEnd = value.indexOf('@');
-        if (fieldEnd < 0 || classEnd < 0) {
+        if (classEnd < 0) {
             throw new DataStoreCorruptedException(row);
         }
         String className = value.substring(0, classEnd);

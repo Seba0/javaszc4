@@ -70,7 +70,7 @@ public class CSVDataStore implements DataStore {
         } else if (!f.exists()) {
             return 1;
         }
-        long id = -1;
+        long id = 0;
         try (BufferedReader r = new BufferedReader(new FileReader(f))) {
             String buffer;
             while ((buffer = r.readLine()) != null) {
