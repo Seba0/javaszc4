@@ -8,6 +8,8 @@
     <name>JavaSzc4</name>
     <modules>
         <module>zadanie</module>
+        <module>javaszc4-malafirma</module>
+        <module>javaszc4-interfaces</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

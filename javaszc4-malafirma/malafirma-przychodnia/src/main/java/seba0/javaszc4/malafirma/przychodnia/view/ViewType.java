@@ -1,0 +1,17 @@
+package seba0.javaszc4.malafirma.przychodnia.view;
+
+enum ViewType {
+    LISTA_WIZYT,
+    LISTA_WIZYT_LEKARZA,
+    LISTA_WIZYT_PACJENTA,
+    LISTA_LEKARZY,
+    LISTA_PACJENTOW,
+    DODAJ_LEKARZA,
+    DODAJ_PACJENTA,
+    DODAJ_WIZYTE,
+    USUN_LEKARZA,
+    USUN_PACJENTA,
+    USUN_WIZYTE,
+    FILTR_WIZYTY,
+    ZAKONCZ
+}
