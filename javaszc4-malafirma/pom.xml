@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <name>Mała Firma</name>
     <modules>
+        <module>malafirma-server</module>
         <module>malafirma-kadry</module>
         <module>malafirma-przychodnia</module>
     </modules>

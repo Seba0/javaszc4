@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="malafirma" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>seba0.javaszc4.malafirma.server.model.Employee</class>
+        <class>seba0.javaszc4.malafirma.server.model.Person</class>
+        <class>seba0.javaszc4.malafirma.server.model.Position</class>
+        <class>seba0.javaszc4.malafirma.server.model.Section</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLiteDialect"/>
+
+            <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:malafirma.db"/>
+
+            <!-- EclipseLink should create the database schema automatically -->
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>
+
