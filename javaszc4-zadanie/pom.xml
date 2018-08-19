@@ -12,6 +12,6 @@
 
     <name>Zadania</name>
     <modules>
-        <module>zadanie-sortowanie</module>
+        <module>sortowanie</module>
     </modules>
 </project>
