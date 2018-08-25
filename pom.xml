@@ -10,6 +10,7 @@
         <module>javaszc4-zadanie</module>
         <module>javaszc4-malafirma</module>
         <module>javaszc4-interfaces</module>
+        <module>javaszc4-tdd</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
