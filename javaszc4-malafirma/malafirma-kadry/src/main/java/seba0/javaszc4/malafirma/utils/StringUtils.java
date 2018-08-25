@@ -6,10 +6,13 @@ public final class StringUtils {
     }
 
     public static boolean isNumeric(String value) {
-        if(value == null || value.isEmpty()) {
+        if (value == null) {
             return false;
         }
         value = value.trim();
+        if (value.isEmpty()) {
+            return false;
+        }
         for (char c : value.toCharArray()) {
             if (!Character.isDigit(c)) {
                 return false;
