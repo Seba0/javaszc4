@@ -51,11 +51,19 @@ public class HeapSort implements Sort {
         return -1;
     }
 
-    private static <T extends Comparable> boolean revertReplace(int index, T[] array) {
-        if (index < 1) {
-            return false;
+    private static <T> boolean revertReplace(int index, T[] array, Comparator<T> comparator) {
+        if (index > 0) {
+            int parentIndex = getPatentIndex(index);
+            T value = array[index];
+            T parent = array[parentIndex];
+            if (comparator.compare(value, parent) > 0) {
+                array[parentIndex] = value;
+                array[index] = parent;
+                revertReplace(parentIndex, array, comparator);
+                return true;
+            }
         }
-        int parentIndex = getPatentIndex(index);
+        return false;
     }
 
     @Override
@@ -67,8 +75,8 @@ public class HeapSort implements Sort {
     @Override
     public <T> T[] sort(T[] array, Comparator<T> comparator) {
         int lastIndex = array.length;
-        for (int i = lastIndex; i >= 0; i--) {
-            replace(i, array, lastIndex, comparator);
+        for (int i = 0; i < lastIndex; i++) {
+            revertReplace(i, array, comparator);
         }
         while (--lastIndex >= 0) {
             T value = array[lastIndex];
