@@ -2,6 +2,7 @@ package seba0.javaszc4.tdd.zadania._2;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,6 +17,11 @@ public class WydarzenieTest {
         nazwa = "Event 2018";
         wydarzenie = new Wydarzenie(nazwa);
         uczestnik = new Uczestnik("Jan", "Kowalski", "mail@example.com", "0048123456789");
+    }
+
+    @Before
+    public void prepare() {
+        wydarzenie.getListaUczestnikow().clear();
     }
 
     @Test
@@ -33,7 +39,8 @@ public class WydarzenieTest {
         // then
         Assertions
                 .assertThat(wydarzenie.getListaUczestnikow())
-                .isNotNull();
+                .isNotNull()
+                .isEmpty();
     }
 
     @Test
@@ -51,8 +58,6 @@ public class WydarzenieTest {
 
     @Test
     public void addUczestnik() {
-        //given
-        wydarzenie.getListaUczestnikow().clear();
         //when
         boolean added = wydarzenie.addUczestnik(uczestnik);
         //then
@@ -71,6 +76,17 @@ public class WydarzenieTest {
         //then
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(removed).isTrue();
+        assertions.assertThat(wydarzenie.getListaUczestnikow()).isEmpty();
+        assertions.assertAll();
+    }
+
+    @Test
+    public void removeUczestnikFromEmptyList() {
+        //when
+        boolean removed = wydarzenie.removeUczestnik(uczestnik);
+        //then
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(removed).isFalse();
         assertions.assertThat(wydarzenie.getListaUczestnikow()).isEmpty();
         assertions.assertAll();
     }
