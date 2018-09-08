@@ -1,4 +1,4 @@
-package seba0.javaszc4.tdd.oblicz.pole;
+package seba0.javaszc4.tdd.wydarzenia;
 
 public final class ObliczPole {
     private ObliczPole() {

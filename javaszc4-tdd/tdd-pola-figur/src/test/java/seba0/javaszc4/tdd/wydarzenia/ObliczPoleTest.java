@@ -1,4 +1,4 @@
-package seba0.javaszc4.tdd.oblicz.pole;
+package seba0.javaszc4.tdd.wydarzenia;
 
 import org.assertj.core.data.Offset;
 import org.junit.Test;

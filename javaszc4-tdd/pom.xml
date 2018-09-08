@@ -16,5 +16,6 @@
         <module>tdd-kalkulator</module>
         <module>tdd-zadania</module>
         <module>tdd-pola-figur</module>
+        <module>tdd-wydarzenia</module>
     </modules>
 </project>
