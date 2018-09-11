@@ -3,6 +3,7 @@ package seba0.javaszc4.wzorce.zadania.kompozyt;
 import java.util.Objects;
 
 /**
+ * Employee class
  *
  * @author sebastian
  */
@@ -11,18 +12,47 @@ public abstract class Employee {
     private String name;
     private int payment;
 
+    /**
+     * Constructor
+     *
+     * @param name name of Employee
+     */
+    public Employee(String name) {
+        this.name = Objects.requireNonNull(name);
+    }
+
+    /**
+     * Get name of Employee
+     *
+     * @return name of Employee
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set name of Employee
+     *
+     * @param name name of Employee
+     */
     public void setName(String name) {
-        this.name = name;
+        this.name = Objects.requireNonNull(name);
     }
 
+    /**
+     * Get payment for Employee
+     *
+     * @return payment for Employee
+     */
     public int getPayment() {
         return payment;
     }
 
+    /**
+     * Set payment for Employee
+     *
+     * @param payment payment for Employee
+     */
     public void setPayment(int payment) {
         this.payment = payment;
     }

@@ -1,71 +1,32 @@
 package seba0.javaszc4.wzorce.zadania.dekorator;
 
-import java.util.Optional;
 import javafx.scene.paint.Color;
 
 /**
- * Car class
+ * Car interface
  *
  * @author sebastian
  */
-public class Car {
-
-    private Color bodyColor = Color.DODGERBLUE;
-    private Optional<Spoiler> spoiler;
-    private int wheelsSize = 14;
+public interface Car {
 
     /**
-     * Get Car body collor
+     * Get color of Car body
      *
-     * @return body collor
+     * @return body color
      */
-    public Color getBodyColor() {
-        return bodyColor;
-    }
+    Color getBodyColor();
 
     /**
-     * Set Car body collor
+     * Get sar spoiler
      *
-     * @param bodyColor body collor
+     * @return Car spoiler
      */
-    void setBodyColor(Color bodyColor) {
-        this.bodyColor = bodyColor;
-    }
+    Spoiler getSpoiler();
 
     /**
-     * Get Car spoiler - optional
+     * Get wheels size
      *
-     * @return spoiler
+     * @return size of wheels
      */
-    public Optional<Spoiler> getSpoiler() {
-        return spoiler;
-    }
-
-    /**
-     * Set Car spoiler - optional
-     *
-     * @param spoiler
-     */
-    void setSpoiler(Optional<Spoiler> spoiler) {
-        this.spoiler = spoiler;
-    }
-
-    /**
-     * Get Car wheels size
-     *
-     * @return wheels size
-     */
-    public int getWheelsSize() {
-        return wheelsSize;
-    }
-
-    /**
-     * Set Car wheels size
-     *
-     * @param wheels size
-     */
-    void setWheelsSize(int wheelsSize) {
-        this.wheelsSize = wheelsSize;
-    }
-
+    int getWheelsSize();
 }

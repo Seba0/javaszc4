@@ -1,34 +1,34 @@
 package seba0.javaszc4.wzorce.zadania.dekorator;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Car spoiler decorator
  *
  * @author sebastian
  */
-public class CarSpoilerDecorator implements CarDecoratorInterface {
+public class CarSpoilerDecorator extends CarDecorator {
 
-    private final Optional<Spoiler> spoiler;
+    private final Spoiler spoiler;
 
     /**
      * Constructor
      *
-     * @param spoiler spoiler for Car - set to empty if remover
+     * @param spoiler spoiler for Car
+     * @param car Car for decorate
      */
-    public CarSpoilerDecorator(Optional<Spoiler> spoiler) {
+    public CarSpoilerDecorator(Spoiler spoiler, Car car) {
+        super(car);
         this.spoiler = Objects.requireNonNull(spoiler);
     }
 
     /**
-     * Decorate Car
+     * Get sar spoiler
      *
-     * @param car Car for decorate
+     * @return Car spoiler
      */
     @Override
-    public void decorate(Car car) {
-        car.setSpoiler(spoiler);
+    public Spoiler getSpoiler() {
+        return spoiler;
     }
-
 }

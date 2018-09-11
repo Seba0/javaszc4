@@ -5,7 +5,7 @@ package seba0.javaszc4.wzorce.zadania.dekorator;
  *
  * @author sebastian
  */
-public class CarWheelsSizeDecorator implements CarDecoratorInterface {
+public class CarWheelsSizeDecorator extends CarDecorator {
 
     private final int wheelsSize;
 
@@ -13,8 +13,10 @@ public class CarWheelsSizeDecorator implements CarDecoratorInterface {
      * Constructor
      *
      * @param wheelsSize size of wheels to mount on Car (min. 12, max. 30)
+     * @param car Car for decorate
      */
-    public CarWheelsSizeDecorator(int wheelsSize) {
+    public CarWheelsSizeDecorator(int wheelsSize, Car car) {
+        super(car);
         if (wheelsSize < 12 || wheelsSize > 30) {
             throw new IllegalArgumentException("Unsupported whells size");
         }
@@ -22,12 +24,12 @@ public class CarWheelsSizeDecorator implements CarDecoratorInterface {
     }
 
     /**
-     * Decorate Car
+     * Get wheels size
      *
-     * @param car Car for decorate
+     * @return size of wheels
      */
     @Override
-    public void decorate(Car car) {
-        car.setWheelsSize(wheelsSize);
+    public int getWheelsSize() {
+        return wheelsSize;
     }
 }

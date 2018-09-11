@@ -31,13 +31,14 @@ public class CashMachineNGIT {
         Map<Nominal, Integer> result = machine.pull(money);
 
         //then
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(result).isNotNull();
-        assertions.assertThat(result).isNotEmpty();
-        assertions.assertThat(result).containsOnlyKeys(Nominal._200, Nominal._100, Nominal._50);
-        assertions.assertThat(result).containsEntry(Nominal._200, 2);
-        assertions.assertThat(result).containsEntry(Nominal._100, 3);
-        assertions.assertThat(result).containsEntry(Nominal._50, 1);
-        assertions.assertAll();
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(result)
+                    .isNotNull()
+                    .isNotEmpty()
+                    .containsOnlyKeys(Nominal._200, Nominal._100, Nominal._50)
+                    .containsEntry(Nominal._200, 2)
+                    .containsEntry(Nominal._100, 3)
+                    .containsEntry(Nominal._50, 1);
+        });
     }
 }

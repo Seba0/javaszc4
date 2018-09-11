@@ -38,8 +38,8 @@ public class PokemonCollection implements Iterable<Pokemon> {
      * @return Pokemon collection iterator
      */
     @Override
-    public ArrayIterator<Pokemon> iterator() {
-        return new ArrayIterator<>(pokemons);
+    public CollectionIterator<Pokemon> iterator() {
+        return new CollectionIterator<>(pokemons);
     }
 
 }

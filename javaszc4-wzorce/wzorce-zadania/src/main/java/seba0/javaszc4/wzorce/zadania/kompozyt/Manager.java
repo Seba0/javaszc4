@@ -4,60 +4,98 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
+ * Manager class extends Employee
  *
  * @author sebastian
  */
 public class Manager extends Employee {
 
-    private final Set<Manager> managers = new HashSet<>();
-    private final Set<Developer> developers = new HashSet<>();
+    private final Set<Employee> employees = new HashSet<>();
 
-    public Set<Manager> getManagers() {
-        return managers;
+    /**
+     * Constructor
+     *
+     * @param name name of Manager
+     */
+    public Manager(String name) {
+        super(name);
     }
 
-    public Optional<Manager> findManager(String name) {
-        for (Manager manager : managers) {
-            if (Objects.equals(manager.getName(), name)) {
-                return Optional.of(manager);
-            }
-            Optional<Manager> find = manager.findManager(name);
-            if (find.isPresent()) {
-                return find;
-            }
-        }
-        return Optional.empty();
-    }
-
-    public Set<Developer> getDevelopers() {
-        return developers;
-    }
-
-    public Optional<Developer> findDeveloper(String name) {
-        for (Developer developer : developers) {
-            if (Objects.equals(developer.getName(), name)) {
-                return Optional.of(developer);
-            }
-        }
-        for (Manager manager : managers) {
-            Optional<Developer> find = manager.findDeveloper(name);
-            if (find.isPresent()) {
-                return find;
-            }
-        }
-        return Optional.empty();
-    }
-
-    public Set<Employee> getSubEmployes() {
-        Set<Employee> employees = new HashSet<>();
-        employees.addAll(developers);
-        managers.stream()
-                .forEach(manager -> {
-                    employees.add(manager);
-                    employees.addAll(manager.getSubEmployes());
-                });
+    /**
+     * Get Employeers under this Manager
+     *
+     * @return Set of Employeers
+     */
+    public Set<Employee> getEmployees() {
         return employees;
+    }
+
+    /**
+     * Get Managers under this Manager
+     *
+     * @return Set of Managers
+     */
+    public Set<Manager> getMenagers() {
+        return employees.parallelStream()
+                .filter(employee -> (employee instanceof Manager))
+                .map(employee -> (Manager) employee)
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Get Developers under this Manager
+     *
+     * @return Set of Developers
+     */
+    public Set<Developer> getDevelopers() {
+        return employees.parallelStream()
+                .filter(employee -> (employee instanceof Developer))
+                .map(employee -> (Developer) employee)
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Find Employee by name
+     *
+     * @param name of searching Employee
+     * @return Employee if faind
+     */
+    public Optional<Employee> findEmployeer(String name) {
+        for (Employee employee : employees) {
+            if (Objects.equals(employee.getName(), name)) {
+                return Optional.of(employee);
+            } else if (employee instanceof Manager) {
+                Manager manager = (Manager) employee;
+                Optional<Employee> find = manager.findEmployeer(name);
+                if (find.isPresent()) {
+                    return find;
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    private static Stream<Employee> getSubEmployesStream(Manager manager) {
+        return manager.getSubEmployes().parallelStream();
+    }
+
+    /**
+     * Get Employeers under this Manager and sub Menagers
+     *
+     * @return Set of all Employeers
+     */
+    public Set<Employee> getSubEmployes() {
+        Set<Employee> subEmployees = new HashSet<>();
+        subEmployees.addAll(employees);
+        subEmployees.addAll(employees.parallelStream()
+                .filter(employee -> (employee instanceof Manager))
+                .map(employee -> (Manager) employee)
+                .flatMap(Manager::getSubEmployesStream)
+                .collect(Collectors.toSet()));
+        return subEmployees;
     }
 }

@@ -1,10 +1,10 @@
 package seba0.javaszc4.wzorce.zadania.dekorator;
 
 /**
- * Spoiler interface
+ * Spoiler types
  *
  * @author sebastian
  */
-public interface Spoiler {
-
+public enum Spoiler {
+    NONE, STANDARD, SPORT
 }

@@ -8,26 +8,28 @@ import javafx.scene.paint.Color;
  *
  * @author sebastian
  */
-public class CarBodyColorDecorator implements CarDecoratorInterface {
+public class CarBodyColorDecorator extends CarDecorator {
 
     private final Color bodyColor;
 
     /**
      * Constructor
      *
-     * @param bodyColor color for decorate Car body
+     * @param bodyColor color for Car body
+     * @param car Car for decorate
      */
-    public CarBodyColorDecorator(Color bodyColor) {
+    public CarBodyColorDecorator(Color bodyColor, Car car) {
+        super(car);
         this.bodyColor = Objects.requireNonNull(bodyColor);
     }
 
     /**
-     * Decorate Car
+     * Get new color of Car body
      *
-     * @param car car for decorate
+     * @return new color of Car body
      */
     @Override
-    public void decorate(Car car) {
-        car.setBodyColor(bodyColor);
+    public Color getBodyColor() {
+        return bodyColor;
     }
 }

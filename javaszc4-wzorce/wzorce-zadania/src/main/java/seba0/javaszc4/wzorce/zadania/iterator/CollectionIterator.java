@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author sebastian
  * @param <E> type of element in array
  */
-public class ArrayIterator<E> implements Iterator<E> {
+public class CollectionIterator<E> implements Iterator<E> {
 
     private int cursor = -1;
     private final E[] array;
@@ -22,7 +22,7 @@ public class ArrayIterator<E> implements Iterator<E> {
      *
      * @param array array of elements for iteration
      */
-    public ArrayIterator(E[] array) {
+    public CollectionIterator(E[] array) {
         Objects.requireNonNull(array);
         this.array = Arrays.copyOf(array, array.length);
     }
@@ -32,7 +32,7 @@ public class ArrayIterator<E> implements Iterator<E> {
      *
      * @param collection collection of elements for iteration
      */
-    public ArrayIterator(Collection<E> collection) {
+    public CollectionIterator(Collection<E> collection) {
         Objects.requireNonNull(collection);
         this.array = (E[]) collection.toArray();
     }
