@@ -5,7 +5,14 @@ import seba0.javaszc4.solid.student.validator.Validator;
 import seba0.javaszc4.solid.student.validator.ValidatorChain;
 
 public abstract class StudentValidator extends ValidatorChain<Student> {
+
+//    private final static StudentValidator vali;vali
+
     public StudentValidator(Validator<Student> suppilor) {
         super(suppilor);
     }
+
+//    public static boolean isValid(Student student) {
+//
+//    }
 }

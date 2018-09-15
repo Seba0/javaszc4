@@ -9,13 +9,14 @@ public abstract class ValidatorChain<T> implements Validator<T> {
     }
 
     public final boolean validate(T value) {
-        if (isValid(value)) {
-            if (suppilor instanceof ValidatorChain) {
-                ValidatorChain chain = (ValidatorChain) suppilor;
-                return chain.validate(value);
-            }
+        if (!isValid(value)) {
+            return false;
+        } else if (suppilor == null) {
             return true;
+        } else if (suppilor instanceof ValidatorChain) {
+            ValidatorChain chain = (ValidatorChain) suppilor;
+            return chain.validate(value);
         }
-        return false;
+        return suppilor.isValid(value);
     }
 }
