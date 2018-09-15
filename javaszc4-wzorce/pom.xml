@@ -23,5 +23,6 @@
         <module>wzorce-lancuch-zobowiazan</module>
         <module>wzorce-kompozyt</module>
         <module>wzorce-zadania</module>
+        <module>wzorce-most</module>
     </modules>
 </project>
