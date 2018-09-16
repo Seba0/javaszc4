@@ -1,4 +1,4 @@
-package seba0.javaszc4.solid.student.validator;
+package seba0.javaszc4.solid.single.responsibility.student.validator;
 
 public abstract class ValidatorChain<T> implements Validator<T> {
 

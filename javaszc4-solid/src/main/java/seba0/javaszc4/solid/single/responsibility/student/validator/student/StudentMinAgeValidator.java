@@ -1,7 +1,7 @@
-package seba0.javaszc4.solid.student.validator.student;
+package seba0.javaszc4.solid.single.responsibility.student.validator.student;
 
-import seba0.javaszc4.solid.student.Student;
-import seba0.javaszc4.solid.student.validator.Validator;
+import seba0.javaszc4.solid.single.responsibility.student.Student;
+import seba0.javaszc4.solid.single.responsibility.student.validator.Validator;
 
 public class StudentMinAgeValidator extends StudentValidator {
 

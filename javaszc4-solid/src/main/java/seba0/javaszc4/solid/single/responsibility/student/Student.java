@@ -1,6 +1,5 @@
-package seba0.javaszc4.solid.student;
+package seba0.javaszc4.solid.single.responsibility.student;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

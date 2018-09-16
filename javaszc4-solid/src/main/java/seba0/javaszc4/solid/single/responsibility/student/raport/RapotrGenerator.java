@@ -1,6 +1,6 @@
-package seba0.javaszc4.solid.student.raport;
+package seba0.javaszc4.solid.single.responsibility.student.raport;
 
-import seba0.javaszc4.solid.student.Student;
+import seba0.javaszc4.solid.single.responsibility.student.Student;
 
 import java.io.PrintStream;
 import java.util.Map;
