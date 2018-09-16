@@ -24,5 +24,6 @@
         <module>wzorce-kompozyt</module>
         <module>wzorce-zadania</module>
         <module>wzorce-most</module>
+        <module>wzorce-mediator</module>
     </modules>
 </project>
