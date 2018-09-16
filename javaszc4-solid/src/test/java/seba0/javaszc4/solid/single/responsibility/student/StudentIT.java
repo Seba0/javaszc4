@@ -6,6 +6,5 @@ public class StudentIT {
 
     @Test
     public void testCreateStudentAndValidIt() {
-
     }
 }
