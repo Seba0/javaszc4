@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hotel Rooms Reservations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="http://iqbalfn.com/bootstrap-select-ajax/src/bootstrap-select-ajax.js"></script>
+    <script type="application/javascript">
+    $(document).ready( function() {
+        function sendFormA(form, target, table, dialog) {
+            var formData = JSON.stringify(form.serializeArray().reduce(function(m,o){ m[o.name] = o.value; return m;}, {}));
+            $.ajax({
+              type: "POST",
+              url: target,
+              data: formData,
+              success: function(response){
+                $(table).bootstrapTable('insertRow', {index: 0, row: response});
+                $(dialog).click();
+              },
+              dataType: "json",
+              contentType : "application/json"
+            });
+        }
+      var formGuest = $("#addGuestForm");
+      formGuest.on('submit', function(e){
+            e.preventDefault();
+            sendFormA(formGuest, '/guest/add', "#guestTable", "#addGuestDialog .close");
+      });
+      $("#guestTable").on('dbl-click-row.bs.table', function(row, element, field){
+      alert(JSON.stringify(row));
+      });
+
+      var formRoom = $("#addRoomForm");
+      formRoom.on('submit', function(e){
+            e.preventDefault();
+            sendFormA(formRoom, '/room/add', "#roomTable", "#addRoomDialog .close");
+      });
+      $("#roomTable").on('dbl-click-row.bs.table', function(row, element, field){
+      alert(JSON.stringify(row));
+      });
+
+      var formReservation = $("#addReservationForm");
+      formReservation.on('submit', function(e){
+            e.preventDefault();
+            sendFormA(formReservation, '/reservation/add', "#reservationTable", "#addReservationDialog .close");
+      });
+
+      $("#reservationTable").on('dbl-click-row.bs.table', function(row, element, field){
+      alert(JSON.stringify(row));
+      });
+      $('select').selectpicker();
+
+      var dialogReservation = $("#addReservationDialog");
+      formReservation.on('shown', function(event){
+        alert(JSON.stringify(event));
+      });
+    });
+
+
+    </script>
+    <style type="text/css">
+    body{
+    	padding-top: 70px;
+    }
+
+
+    </style>
+</head>
+<body>
+<nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">HRR</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse nav-tabs" id="navbarCollapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a data-toggle="tab" href="#reservations">Reservations</a></li>
+                <li><a data-toggle="tab" href="#guests">Guests</a></li>
+                <li><a data-toggle="tab" href="#rooms">Rooms</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="tab-content">
+        <div id="reservations" class="tab-pane fade in active">
+            <div id="toolbar">
+                <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal"
+                   data-target="#addReservationDialog">New</a>
+            </div>
+            <table id="reservationTable"
+                   class="display table table-bordered"
+                   data-radio="true"
+                   data-toggle="table"
+                   data-pagination="true"
+                   data-url="/reservation/list"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-search="true"
+                   data-show-pagination-switch="true"
+                   data-id-field="id"
+                   data-page-list="[10, 25, 50, 100, ALL]">
+                <thead class="thead-dark">
+                <tr>
+                    <th data-sortable="true" data-field="id">Id</th>
+                    <th data-sortable="true" data-field="room">Room</th>
+                    <th data-sortable="true" data-field="dateFrom">From</th>
+                    <th data-sortable="true" data-field="toFrom">To</th>
+                    <th data-sortable="true" data-field="guest">Guest</th>
+                    <th data-sortable="true" data-field="date">Date</th>
+                    <th data-sortable="true" data-field="information">Informations</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="modal fade" id="addReservationDialog" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">New Reservation</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="addReservationForm" method="post">
+                            <div class="modal-body mx-3">
+                                <div class="md-form mb-5">
+                                    <i class="fa fa-envelope prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="room">Room</label>
+                                    <select class="selectpicker form-control" id="room" name="room"
+                                            data-url="/room/list" data-live-search="true">
+                                    </select>
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="dateFrom">Reserved from</label>
+                                    <input type="date" id="dateFrom" name="dateFrom" class="form-control validate">
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="toFrom">Reserved to</label>
+                                    <input type="date" id="toFrom" name="toFrom" class="form-control validate">
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="guest">Guest</label>
+                                    <select class="selectpicker form-control" id="guest" name="guest"
+                                            data-ajax="/guest/list" data-live-search="true">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button class="btn btn-success">Dodaj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="guests" class="tab-pane fade">
+            <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal"
+               data-target="#addGuestDialog">New</a>
+            <table id="guestTable"
+                   class="display table table-bordered"
+                   data-radio="true"
+                   data-toggle="table"
+                   data-pagination="true"
+                   data-url="/guest/list"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-search="true"
+                   data-show-pagination-switch="true"
+                   data-id-field="id"
+                   data-page-list="[10, 25, 50, 100, ALL]">
+                <thead class="thead-dark">
+                <tr>
+                    <th data-sortable="true" data-field="id">Id</th>
+                    <th data-sortable="true" data-field="name">Name</th>
+                    <th data-sortable="true" data-field="address">Address</th>
+                    <th data-field="information">Informations</th>
+                    <th data-sortable="true" data-field="registrationDate">Registration Date</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="modal fade" id="addGuestDialog" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">New Guest</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="addGuestForm" method="post">
+                            <div class="modal-body mx-3">
+                                <div class="md-form mb-5">
+                                    <i class="fa fa-envelope prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="name">Name</label>
+                                    <input type="text" id="name" name="name" class="form-control validate">
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="address">Address</label>
+                                    <input type="text" id="address" name="address" class="form-control validate">
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button class="btn btn-success">Dodaj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rooms" class="tab-pane fade">
+            <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal" data-target="#addRoomDialog">New</a>
+            <table id="roomTable"
+                   class="display table table-bordered"
+                   data-toggle="table"
+                   data-pagination="true"
+                   data-url="/room/list"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-search="true"
+                   data-show-pagination-switch="true"
+                   data-id-field="nr"
+                   data-page-list="[10, 25, 50, 100, ALL]">
+                <thead class="thead-dark">
+                <tr>
+                    <th data-sortable="true" data-field="nr">Nr</th>
+                    <th data-sortable="true" data-field="area">Area (m²)</th>
+                    <th data-sortable="true" data-field="standard">Standard</th>
+                    <th data-sortable="true" data-field="beds">Beds</th>
+                    <th data-sortable="true" data-field="price">Price</th>
+                    <th data-sortable="true" data-field="information">Informations</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="modal fade" id="addRoomDialog" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">New Room</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="addRoomForm" method="post">
+                            <div class="modal-body mx-3">
+                                <div class="md-form mb-5">
+                                    <i class="fa fa-envelope prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="nr">Number</label>
+                                    <input type="number" id="nr" name="nr" min="0" step="1"
+                                           class="form-control validate">
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="area">Area (m²)</label>
+                                    <input type="number" id="area" name="area" min="1" max="127" step="1"
+                                           class="form-control validate">
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="standard">Standard</label>
+                                    <input type="text" id="standard" name="standard" minlength="1" maxlength="1"
+                                           class="form-control validate">
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="beds">Number of Beds</label>
+                                    <input type="number" id="beds" name="beds" min="0" step="1"
+                                           class="form-control validate">
+                                </div>
+                                <div class="md-form mb-4">
+                                    <i class="fa fa-lock prefix grey-text"></i>
+                                    <label data-error="wrong" data-success="right" for="price">Price</label>
+                                    <input type="number" id="price" name="price" min="0" step="0.01"
+                                           class="form-control validate">
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button class="btn btn-success">Dodaj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

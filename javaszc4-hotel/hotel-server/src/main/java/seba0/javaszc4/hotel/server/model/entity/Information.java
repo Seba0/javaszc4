@@ -51,4 +51,9 @@ public class Information {
     public void setBody(String body) {
         this.body = body;
     }
+
+    @Override
+    public String toString() {
+        return name + '\n' + body;
+    }
 }

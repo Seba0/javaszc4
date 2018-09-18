@@ -1,6 +1,7 @@
 package seba0.javaszc4.hotel.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import seba0.javaszc4.hotel.server.model.entity.Guest;
 import seba0.javaszc4.hotel.server.service.GuestService;
@@ -17,23 +18,24 @@ public class GuestController {
     private GuestService guestService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
     public List<Guest> list() {
         return guestService.getAllGuests();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Guest edit(@PathVariable long id) {
-        Optional<Guest> guestById = guestService.getGuestById(id);
-        return guestById.orElse(null);
+    @ResponseBody
+    public Guest getById(@PathVariable("id") long id) {
+        Optional<Guest> guest = guestService.getGuestById(id);
+        return guest.orElse(null);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public boolean add(@RequestBody Guest guest) {
-        if(guest.getId() > 0) {
-            return false;
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public Guest add(@RequestBody Guest guest) {
         guest.setRegistrationDate(new Date());
         guestService.saveOrUpdateGuest(guest);
-        return true;
+        return guest;
     }
 }

@@ -1,6 +1,7 @@
 package seba0.javaszc4.hotel.server.service;
 
 import seba0.javaszc4.hotel.server.model.entity.Reservation;
+import seba0.javaszc4.hotel.server.model.entity.Room;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +16,5 @@ public interface ReservationService {
 
     void deleteReservation(Reservation reservation);
 
+    List<Reservation> getReservationByRoom(Room room);
 }

@@ -18,7 +18,7 @@ public class Room {
     private byte area;
 
     @Column
-    private byte standard;
+    private char standard;
 
     @Column
     private byte beds;
@@ -45,11 +45,11 @@ public class Room {
         this.area = area;
     }
 
-    public byte getStandard() {
+    public char getStandard() {
         return standard;
     }
 
-    public void setStandard(byte standard) {
+    public void setStandard(char standard) {
         this.standard = standard;
     }
 
@@ -79,5 +79,10 @@ public class Room {
 
     public void setInformation(List<Information> information) {
         this.information = information;
+    }
+
+    @Override
+    public String toString() {
+        return nr + " / " + area + " / " + standard + " / " + beds + " / " + price;
     }
 }

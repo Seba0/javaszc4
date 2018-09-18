@@ -9,7 +9,7 @@ public class Guest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,5 +62,10 @@ public class Guest {
 
     public void setInformation(List<Information> information) {
         this.information = information;
+    }
+
+    @Override
+    public String toString() {
+        return name + '\n' + address;
     }
 }

@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class WWWController {
+public class WebClientController {
 
     @RequestMapping(value="/", method= RequestMethod.GET)
-    public ModelAndView clientWeb() {
+    public ModelAndView start() {
         ModelAndView model = new ModelAndView();
-        model.setViewName("clientWeb");
+        model.setViewName("client");
 
         return model;
     }

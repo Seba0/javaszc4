@@ -10,7 +10,7 @@ public interface RoomService {
 
     List<Room> getAllRooms();
 
-    Optional<Room> getRoomById(short id);
+    Optional<Room> getRoomByNr(short nr);
 
     void saveOrUpdateRoom(Room guest);
 
