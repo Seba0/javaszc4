@@ -1,6 +1,7 @@
 package seba0.javaszc4.hotel.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import seba0.javaszc4.hotel.server.model.entity.Reservation;
@@ -46,7 +47,9 @@ public class RoomController {
 
     @RequestMapping(value = "/list/free/{fromDate}/{toDate}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Room> listFree(@PathVariable("fromDate") Date fromDate, @PathVariable("toDate") Date toDate) {
+    public List<Room> listFree(
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("fromDate") Date fromDate,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("toDate") Date toDate) {
         List<Room> freeRooms = new ArrayList<>();
         List<Room> allRooms = roomService.getAllRooms();
         for (Room room : allRooms) {
