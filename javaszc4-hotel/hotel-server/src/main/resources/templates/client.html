@@ -19,7 +19,14 @@
     <script type="application/javascript">
     $(document).ready( function() {
         function sendFormA(form, target, table, dialog) {
-            var formData = JSON.stringify(form.serializeArray().reduce(function(m,o){ m[o.name] = o.value; return m;}, {}));
+            var formData = JSON.stringify(form.serializeArray().reduce(function(m,o){
+                try {
+                    m[o.name] = $.parseJSON(o.value);
+                } catch (e) {
+                    m[o.name] = o.value;
+                }
+                return m;
+            }, {}));
             $.ajax({
               type: "POST",
               url: target,
@@ -69,6 +76,8 @@
         var reservationDialogBack = $("#addReservationDialogBack");
         var reservationDialogAdd = $("#addReservationDialogAdd");
 
+        var room = $("#room");
+        var guest = $("#guest");
         var dateFrom = $("#dateFrom");
         var dateTo = $("#dateTo");
 
@@ -79,6 +88,7 @@
         reservationDialogRoomGuest.hide();
         reservationDialogBack.hide();
         reservationDialogAdd.hide();
+
         var date = new Date();
         var tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000);
         date = date.toISOString().slice(0,10);
@@ -130,6 +140,8 @@
             reservationDialogDate.hide();
             reservationDialogNext.hide();
             reservationDialogSpinner.show();
+            room.find('option').remove().end();
+            guest.find('option').remove().end();
             var rooms = null;
             var guests = null;
             $.ajax({
@@ -171,16 +183,31 @@
          });
 
         function reservationFormRoomsGuests(rooms, guests) {
+            $.each(rooms, function(i, item) {
+                room.append("<option value='" + JSON.stringify(item) + "'>Nr: " + item.nr + ' / Area: ' + item.area + 'm² / Standard: ' + item.standard + ' / Beds: ' + item.beds + ' / Price: ' + item.price + '</option>');
+                });
+            $.each(guests, function(i, item) {
+                guest.append("<option value='" + JSON.stringify(item) + "'>" + item.name + ' ' + item.address + '</option>');
+                });
+               room.selectpicker('refresh');
+               guest.selectpicker('refresh');
             reservationDialogSpinner.hide();
             reservationDialogRoomGuest.show();
             reservationDialogBack.show();
-            reservationDialogAdd.show();
+            if(rooms.length > 0 && guests.length > 0) {
+                reservationDialogAdd.show();
+            }
+
         }
     });
 
 
     function dateFormatter(dateTime) {
-        return dateTime.substring(0, 10) + ' ' + dateTime.substring(11, 19);
+        if(dateTime) {
+            dateTime = new Date(dateTime * 1000).toISOString();
+            return dateTime.substring(0, 10) + ' ' + dateTime.substring(11, 19);
+        }
+        return dateTime;
     }
 
     </script>
@@ -238,7 +265,7 @@
                     <th data-sortable="true" data-field="id" rowspan="2">Id</th>
                     <th colspan="4">Room</th>
                     <th data-sortable="true" data-field="dateFrom" rowspan="2">From</th>
-                    <th data-sortable="true" data-field="toFrom" rowspan="2">To</th>
+                    <th data-sortable="true" data-field="dateTo" rowspan="2">To</th>
                     <th colspan="2">Guest</th>
                     <th data-sortable="true" data-field="date" data-formatter="dateFormatter" rowspan="2">Date</th>
                     <th data-sortable="true" data-field="information" rowspan="2">Informations</th>
@@ -282,15 +309,13 @@
                                 <div class="md-form mb-5">
                                     <i class="fa fa-key prefix grey-text"></i>
                                     <label data-error="wrong" data-success="right" for="room">Room</label>
-                                    <select class="form-control validate" id="room" name="room"
-                                            data-url="/room/list" data-live-search="true" required>
+                                    <select class="form-control validate" id="room" name="room" data-live-search="true" required>
                                     </select>
                                 </div>
                                 <div class="md-form mb-4">
                                     <i class="fa fa-user prefix grey-text"></i>
                                     <label data-error="wrong" data-success="right" for="guest">Guest</label>
-                                    <select class="form-control validate" id="guest" name="guest"
-                                            data-ajax="/guest/list" data-live-search="true" required>
+                                    <select class="form-control validate" id="guest" name="guest"  data-live-search="true" required>
                                     </select>
                                 </div>
                             </div>

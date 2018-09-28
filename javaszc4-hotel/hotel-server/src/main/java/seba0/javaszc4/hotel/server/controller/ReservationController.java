@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import seba0.javaszc4.hotel.server.model.entity.Reservation;
 import seba0.javaszc4.hotel.server.service.ReservationService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ public class ReservationController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Reservation add(@RequestBody Reservation reservation) {
+        reservation.setDate(new Date());
         reservationService.saveOrUpdateReservation(reservation);
         return reservation;
     }
