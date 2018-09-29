@@ -12,6 +12,7 @@
     <artifactId>javaszc4-hotel</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>hotel-client-web</module>
     </modules>
     <dependencyManagement>
         <dependencies>
