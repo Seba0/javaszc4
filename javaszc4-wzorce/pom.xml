@@ -25,5 +25,6 @@
         <module>wzorce-zadania</module>
         <module>wzorce-most</module>
         <module>wzorce-mediator</module>
+        <module>wzorce-budowniczy</module>
     </modules>
 </project>
