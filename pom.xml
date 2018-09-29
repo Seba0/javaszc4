@@ -12,6 +12,7 @@
         <module>javaszc4-malafirma</module>
         <module>javaszc4-interfaces</module>
         <module>javaszc4-solid</module>
+        <module>JavaSzc4 Wielowatkowosc</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
