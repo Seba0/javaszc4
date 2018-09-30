@@ -1,4 +1,4 @@
-package seba0.javaszc4.wielowatkowosc.zad._1;
+package seba0.javaszc4.wielowatkowosc.prerwania._1;
 
 import java.util.Scanner;
 

@@ -1,10 +1,10 @@
-package seba0.javaszc4.wielowatkowosc.zad._1;
+package seba0.javaszc4.wielowatkowosc.prerwania._1;
 
-public class CounterThread extends Thread {
+public class CounterRunnable implements Runnable {
     private final int countTo;
     private final int delayMillis;
 
-    public CounterThread(int countTo, int delayMillis) {
+    public CounterRunnable(int countTo, int delayMillis) {
         this.countTo = countTo;
         this.delayMillis = delayMillis;
     }
