@@ -27,5 +27,6 @@
         <module>wzorce-mediator</module>
         <module>wzorce-budowniczy</module>
         <module>wzorce-metoda-szablonowa</module>
+        <module>wzorce-pelnomocnik</module>
     </modules>
 </project>
