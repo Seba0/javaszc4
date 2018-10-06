@@ -1,4 +1,4 @@
-package seba0.javaszc4.wielowatkowosc.prerwania._2;
+package seba0.javaszc4.wielowatkowosc.przerwania._2;
 
 public class CounterThread extends Thread {
     private final int countTo;
