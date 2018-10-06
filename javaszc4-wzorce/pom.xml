@@ -28,5 +28,6 @@
         <module>wzorce-budowniczy</module>
         <module>wzorce-metoda-szablonowa</module>
         <module>wzorce-pelnomocnik</module>
+        <module>wzorce-fabryka-abstrakcyjna</module>
     </modules>
 </project>
