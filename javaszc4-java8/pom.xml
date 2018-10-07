@@ -20,6 +20,7 @@
     </properties>
 
     <modules>
+        <module>java8-lambda</module>
     </modules>
 
 </project>
