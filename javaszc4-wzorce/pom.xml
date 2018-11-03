@@ -29,5 +29,6 @@
         <module>wzorce-metoda-szablonowa</module>
         <module>wzorce-pelnomocnik</module>
         <module>wzorce-fabryka-abstrakcyjna</module>
+        <module>wzorce-polecenie</module>
     </modules>
 </project>
