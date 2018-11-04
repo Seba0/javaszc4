@@ -11,11 +11,11 @@
         <property name="connection.driver_class">org.mariadb.jdbc.Driver</property>
         <property name="show_sql">true</property>
 
-        <!--mapping class="seba0.javaszc4.hibernate.model.entity.Employee"/>
-        <mapping class="seba0.javaszc4.hibernate.model.entity.Department"/>
-        <mapping class="seba0.javaszc4.hibernate.model.entity.Project"/-->
+        <mapping class="seba0.javaszc4.hibernate.model.entity.Employee"/>
+        <mapping class="seba0.javaszc4.hibernate.model.entity.Project"/>
 
-        <mapping class="seba0.javaszc4.hibernate.model.entity.Author"/>
-        <mapping class="seba0.javaszc4.hibernate.model.entity.Book"/>
+        <!--mapping class="seba0.javaszc4.hibernate.model.entity.Author"/>
+        <mapping class="seba0.javaszc4.hibernate.model.entity.Department"/>
+        <mapping class="seba0.javaszc4.hibernate.model.entity.Book"/-->
     </session-factory>
 </hibernate-configuration>

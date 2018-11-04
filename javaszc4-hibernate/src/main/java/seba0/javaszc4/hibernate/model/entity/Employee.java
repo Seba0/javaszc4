@@ -1,33 +1,26 @@
 package seba0.javaszc4.hibernate.model.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Employee implements Serializable {
-
-    private static final long serialVersionUID = 22L;
-
+public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private long id;
 
-    @Column(length = 35, nullable = false)
-    private String firstName;
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    @Column(length = 35, nullable = false)
-    private String lastName;
+    public Employee() {
+    }
 
-    @Column(length = 35, nullable = false)
-    private String position;
+    public Employee(String name) {
+        this.name = name;
+    }
 
-    @OneToOne(optional = false)
-    private Department department;
-
-    @ManyToMany
-    private final List<Project> projects = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Project> projects;
 
     public long getId() {
         return id;
@@ -37,50 +30,28 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Project> getProjects() {
         return projects;
     }
 
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", position='" + position + '\'' +
-                ", department=" + department +
+                ", name='" + name + '\'' +
+                ", projects=" + projects +
                 '}';
     }
 }

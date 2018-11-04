@@ -1,23 +1,27 @@
 package seba0.javaszc4.hibernate.model.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Project {
 
-    private static final long serialVersionUID = 32L;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private long id;
 
-    @Column(length = 70, nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany
-    private final List<Employee> employees = new ArrayList<>();
+    @ManyToOne
+    private Employee employee;
+
+    public Project() {
+    }
+
+    public Project(String name, Employee employee) {
+        this.name = name;
+        this.employee = employee;
+    }
 
     public long getId() {
         return id;
@@ -35,7 +39,20 @@ public class Project {
         this.name = name;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", employee=" + employee.getId() +
+                '}';
     }
 }
