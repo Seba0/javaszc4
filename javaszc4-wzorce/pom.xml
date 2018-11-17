@@ -30,5 +30,6 @@
         <module>wzorce-pelnomocnik</module>
         <module>wzorce-fabryka-abstrakcyjna</module>
         <module>wzorce-polecenie</module>
+        <module>wzorce-stan</module>
     </modules>
 </project>
