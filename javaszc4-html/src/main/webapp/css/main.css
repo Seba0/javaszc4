@@ -1,0 +1,196 @@
+/* 
+    Created on : 2018-11-18, 10:03:35
+    Author     : sebastian
+*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+}
+
+body {
+    font-size: 1.6rem;
+    min-height: 100%;
+}
+
+article {
+    display: none;
+}
+
+article:target {
+    display: block;
+}
+
+.background-white {
+    background-color: #fff;
+    color: #333;
+}
+
+.background-dark {
+    background-color: #333;
+    color: #fff;
+}
+
+.background-blue {
+    background-color: #4267b2;
+}
+
+.background-yellow {
+    background-color: #c7900a;
+}
+
+nav {
+    margin: 0 auto;
+    max-width: 110rem;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    list-style: none;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+li a {
+    display: block;
+    width: 100%;
+    color: white;
+    padding: 1.5rem;
+
+}
+
+li a:hover {
+    background-color: #29487d;
+}
+
+main {
+    max-width: 110rem;
+    min-height: calc(100vh - 14.5rem);
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    text-align: center;
+}
+
+.weather {
+    height: 15rem;
+    width: 30rem;
+    margin: 1rem auto;
+    padding: 1rem;
+    border: 0.5rem solid #4267b2;
+    border-radius: 2rem;
+}
+
+.weather-condition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 4rem;
+    padding: 2rem;
+}
+
+h2 {
+    padding: 1rem;
+}
+
+h3 {
+    padding-bottom: 1rem;
+}
+
+.profile-photo {
+    width: 25rem;
+    height: 25rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 0.5rem solid transparent;
+    box-shadow: 0 0 0.5rem #4267b2;
+}
+
+.toggle-background {
+    display: block;
+    margin: 2rem auto;
+    padding: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    background-color: #4267b2;
+    border-style: none;
+    border-radius: 1rem;
+    outline-style: none;
+}
+
+.toggle-background:focus {
+    box-shadow: 0 0 0 0.2rem #bc243c;
+}
+
+.toggle-background:hover {
+    background-color: #29487d;
+    cursor: pointer;
+}
+
+#description div {
+    margin-top: 2rem;
+}
+
+.underline {
+    width: 15rem;
+    height: 1rem;
+    margin: 2rem 0 auto;
+    background-color: #4267b2;
+    border-radius: 5rem;
+}
+
+footer {
+    margin-top: 4rem;
+    padding: 1rem;
+    text-align: center;
+    color: #fff;
+}
+
+@media screen and (min-width: 768) {
+    li a {
+        padding: 2rem 5rem;
+    }
+
+    #description {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #description div {
+        max-width: 30%;
+    }
+
+    .paragraph {
+        min-width: 20rem;
+    }
+}
+
+@media screen and (min-width: 1025) {
+    .weather {
+        min-height: 15.5rem;
+        width: 20rem;
+        position: absolute;
+        right: 0;
+    }
+
+    .paragraph {
+        min-height: 15rem;
+    }
+}

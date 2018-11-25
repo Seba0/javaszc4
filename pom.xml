@@ -15,6 +15,7 @@
         <module>javaszc4-java8</module>
         <module>javaszc4-wielowatkowosc</module>
         <module>javaszc4-jdbc</module>
+        <module>javaszc4-html</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
