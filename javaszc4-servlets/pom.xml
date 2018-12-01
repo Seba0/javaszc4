@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>servlets-start</module>
+        <module>servlets-cdi</module>
     </modules>
 
 
