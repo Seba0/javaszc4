@@ -32,5 +32,6 @@
         <module>wzorce-polecenie</module>
         <module>wzorce-stan</module>
         <module>wzorce-wizytator</module>
+        <module>wzorce-pylek</module>
     </modules>
 </project>
