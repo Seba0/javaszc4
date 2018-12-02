@@ -1,13 +1,11 @@
 package seba0.javaszc4.servlets.model.entities;
 
 import lombok.Data;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 @Data
-@ToString
-public class Car {
+@NoArgsConstructor
+public class Director {
 
-    private Long id;
     private String name;
-    private String model;
 }
