@@ -33,5 +33,6 @@
         <module>wzorce-stan</module>
         <module>wzorce-wizytator</module>
         <module>wzorce-pylek</module>
+        <module>wzorce-null</module>
     </modules>
 </project>
