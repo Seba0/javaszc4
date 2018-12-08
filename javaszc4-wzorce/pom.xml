@@ -34,5 +34,6 @@
         <module>wzorce-wizytator</module>
         <module>wzorce-pylek</module>
         <module>wzorce-null</module>
+        <module>wzorce-mvc</module>
     </modules>
 </project>
