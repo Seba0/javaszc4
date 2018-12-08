@@ -10,6 +10,6 @@
     </parent>
 
     <groupId>seba0.javaszc4.wzorce</groupId>
-    <artifactId>wzorce-pizza</artifactId>
+    <artifactId>wzorce-dekorator</artifactId>
 
 </project>

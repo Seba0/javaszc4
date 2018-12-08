@@ -16,7 +16,7 @@
     </properties>
     <name>JavaSzc4 Wzorce</name>
     <modules>
-        <module>wzorce-pizza</module>
+        <module>wzorce-dekorator</module>
         <module>wzorce-prototype</module>
         <module>wzorce-obserwator</module>
         <module>wzorce-factory</module>
