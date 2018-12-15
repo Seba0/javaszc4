@@ -1,17 +1,14 @@
 package seba0.javaszc4.servlets.model.repository;
 
 import seba0.javaszc4.servlets.model.entities.Director;
+import seba0.javaszc4.servlets.model.repository.crud.CRUDRepository;
 
-import java.util.Collection;
-import java.util.Optional;
+import javax.inject.Singleton;
 
-public interface DirectorRepository {
+@Singleton
+public class DirectorRepository extends CRUDRepository<Director> {
 
-    boolean insert(Director director);
-
-    Optional<Director> getByName(String name);
-
-    Collection<Director> getAll();
-
-    boolean remove(Director director);
+    public DirectorRepository() {
+        super(Director.class);
+    }
 }

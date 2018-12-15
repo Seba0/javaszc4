@@ -4,8 +4,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("D")
-public class Director extends Person {
+@DiscriminatorValue("A")
+public class Actor extends Person {
 
     private static final long serialVersionUID = 1L;
 }
