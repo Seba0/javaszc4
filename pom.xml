@@ -17,6 +17,7 @@
         <module>javaszc4-jdbc</module>
         <module>javaszc4-servlets</module>
         <module>javaszc4-gson</module>
+        <module>javaszc4-spring</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
