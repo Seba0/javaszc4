@@ -17,6 +17,13 @@ class PromoCampaignController {
 
     @PostMapping
     void add(@RequestBody PromoCampaign campaign) {
+        if (!campaign.getBegin()
+                .isBefore(campaign.getEnd())) {
+            throw new IllegalArgumentException("End before begin");
+        } else if (!campaign.getCreator()
+                .getBrand().equals(campaign.getBrand())) {
+            throw new IllegalArgumentException("Creator from other brand");
+        }
         service.save(campaign);
     }
 

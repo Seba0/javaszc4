@@ -9,7 +9,6 @@ import seba0.javaszc4.spring.model.repository.PromoCampaignRepository;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PromoCampaignService {
@@ -21,13 +20,6 @@ public class PromoCampaignService {
     private BrandRepository brandRepository;
 
     public void save(PromoCampaign campaign) {
-        if (!campaign.getBegin()
-                .isBefore(campaign.getEnd())) {
-            throw new IllegalArgumentException("End before begin");
-        } else if (campaign.getCreator()
-                .getBrand().equals(campaign.getBrand())) {
-            throw new IllegalArgumentException("Creator from other brand");
-        }
         campaignRepository.save(campaign);
     }
 
@@ -35,31 +27,30 @@ public class PromoCampaignService {
         return campaignRepository.findAll();
     }
 
-    public List<PromoCampaign> getAllForBrand(String brand) {
-        return brandRepository.getByName(brand)
+    public List<PromoCampaign> getAllForBrand(String brandName) {
+        return brandRepository.getByName(brandName)
                 .map(campaignRepository::getAllByBrand)
                 .orElse(Collections.EMPTY_LIST);
     }
 
-    public List<PromoCampaign> getFutureByBrand(String brand) {
+    public List<PromoCampaign> getFutureByBrand(String brandName) {
         final LocalDate date = LocalDate.now();
-        return getAllForBrand(brand).stream()
-                .filter(campaign -> date.isBefore(campaign.getBegin()))
-                .collect(Collectors.toList());
+        return brandRepository.getByName(brandName)
+                .map(brand -> campaignRepository.getAllByBrandAndBeginIsAfter(brand, date))
+                .orElse(Collections.EMPTY_LIST);
     }
 
-    public List<PromoCampaign> getCurrentByBrand(String brand) {
+    public List<PromoCampaign> getCurrentByBrand(String brandName) {
         final LocalDate date = LocalDate.now();
-        return getAllForBrand(brand).stream()
-                .filter(campaign -> date.isAfter(campaign.getBegin()))
-                .filter(campaign -> date.isBefore(campaign.getEnd()))
-                .collect(Collectors.toList());
+        return brandRepository.getByName(brandName)
+                .map(brand -> campaignRepository.getAllByBrandAndBeginIsBeforeAndEndIsAfter(brand, date, date))
+                .orElse(Collections.EMPTY_LIST);
     }
 
-    public List<PromoCampaign> getEndedByBrand(String brand) {
+    public List<PromoCampaign> getEndedByBrand(String brandName) {
         final LocalDate date = LocalDate.now();
-        return getAllForBrand(brand).stream()
-                .filter(campaign -> date.isAfter(campaign.getEnd()))
-                .collect(Collectors.toList());
+        return brandRepository.getByName(brandName)
+                .map(brand -> campaignRepository.getAllByBrandAndEndIsBefore(brand, date))
+                .orElse(Collections.EMPTY_LIST);
     }
 }
