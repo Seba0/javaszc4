@@ -1,0 +1,7 @@
+tr .btn {
+    visibility: hidden;
+}
+
+tr:hover .btn {
+    visibility: visible;
+}

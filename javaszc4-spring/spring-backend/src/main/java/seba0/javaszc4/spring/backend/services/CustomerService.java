@@ -1,5 +1,6 @@
 package seba0.javaszc4.spring.backend.services;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import seba0.javaszc4.spring.backend.model.entity.Brand;
@@ -7,6 +8,7 @@ import seba0.javaszc4.spring.backend.model.repository.CustomerRepository;
 import seba0.javaszc4.spring.backend.model.entity.Customer;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -22,6 +24,12 @@ public class CustomerService {
         }
         customerRepository.save(customer);
         return customer.getId() != null;
+    }
+
+    public Optional<Customer> delete(ObjectId id) {
+        Optional<Customer> customer = customerRepository.findById(id);
+        customer.ifPresent(customerRepository::delete);
+        return customer;
     }
 
     public void save(Customer customer) {
