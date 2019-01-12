@@ -6,9 +6,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Configuration
-public class URLConfig {
+public class AdminConfig {
 
-    @Value("${url.customer}")
-    private String customer;
+    @Value("${admin.username}")
+    private String username;
 
+    @Value("${admin.password}")
+    private String password;
 }

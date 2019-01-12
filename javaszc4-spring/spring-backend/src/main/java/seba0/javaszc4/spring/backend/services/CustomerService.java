@@ -42,4 +42,8 @@ public class CustomerService {
     public List<Customer> getAll() {
         return customerRepository.findAll();
     }
+
+    public Optional<Customer> getByLogin(String login) {
+        return customerRepository.findFirstByLogin(login);
+    }
 }

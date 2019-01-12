@@ -3,7 +3,7 @@ package seba0.javaszc4.spring.frontend.validators;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import seba0.javaszc4.spring.frontend.dao.UserForm;
+import seba0.javaszc4.spring.frontend.dto.UserForm;
 
 @Component
 public class UserValidator implements Validator {

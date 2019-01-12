@@ -3,13 +3,14 @@ package seba0.javaszc4.spring.frontend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import seba0.javaszc4.spring.frontend.config.URLConfig;
-import seba0.javaszc4.spring.frontend.dao.UserForm;
+import seba0.javaszc4.spring.frontend.dto.UserForm;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,6 +25,9 @@ class UserController {
     private URLConfig urlConfig;
 
     private final RestTemplate template = new RestTemplate();
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping
     public ModelAndView list() {
@@ -56,6 +60,7 @@ class UserController {
             return error("Unable to add user", "Wrong password confirmation");
         }
         try {
+            userForm.setPassword(passwordEncoder.encode(userForm.getPassword()));
             ResponseEntity<String> entity = template.postForEntity(urlConfig.getCustomer(), userForm, String.class);
             if (entity.getStatusCode() != HttpStatus.OK) {
                 return error("Unable to add user", entity.getBody());

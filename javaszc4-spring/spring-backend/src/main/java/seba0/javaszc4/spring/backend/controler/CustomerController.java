@@ -8,7 +8,6 @@ import seba0.javaszc4.spring.backend.services.CustomerService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -28,22 +27,23 @@ class CustomerController {
                 .body("Customer already exist.");
     }
 
-    private Customer clearPassword(Customer customer) {
-        customer.setPassword("");
-        return customer;
+    @GetMapping
+    ResponseEntity<List<Customer>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping
-    List<Customer> getAll() {
-        return service.getAll().stream()
-                .map(this::clearPassword)
-                .collect(Collectors.toList());
+    @GetMapping("{login}")
+    ResponseEntity<Customer> getByLogin(@PathVariable String login) {
+        return service.getByLogin(login)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity
+                        .notFound()
+                        .build());
     }
 
     @DeleteMapping("{id}")
-    ResponseEntity delete(@PathVariable String id) {
+    ResponseEntity<Customer> delete(@PathVariable String id) {
         return service.delete(id)
-                .map(this::clearPassword)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity
                         .notFound()
