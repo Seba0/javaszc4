@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Getter
-public class Config {
+public class URLConfig {
 
-    @Value("calc.baseurl")
-    private String baseUrl;
+    @Value("${url.customer}")
+    private String customer;
 
 }

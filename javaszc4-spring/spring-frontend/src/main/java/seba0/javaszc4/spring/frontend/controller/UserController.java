@@ -1,5 +1,6 @@
 package seba0.javaszc4.spring.frontend.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import seba0.javaszc4.spring.frontend.config.URLConfig;
 import seba0.javaszc4.spring.frontend.dao.UserForm;
 
 import javax.validation.Valid;
@@ -18,13 +20,14 @@ import java.util.Objects;
 @RequestMapping("/user")
 class UserController {
 
-    private static final String URL_CUSTOMER = "http://127.0.0.1:9090/customer";
-    private static final String URL_CUSTOMER_ID = URL_CUSTOMER + "/{id}";
+    @Autowired
+    private URLConfig urlConfig;
+
     private final RestTemplate template = new RestTemplate();
 
     @GetMapping
     public ModelAndView list() {
-        ResponseEntity<List> entity = template.getForEntity(URL_CUSTOMER, List.class);
+        ResponseEntity<List> entity = template.getForEntity(urlConfig.getCustomer(), List.class);
         if (entity.getStatusCode() != HttpStatus.OK) {
             return error("Error", "Unable to get user list");
         }
@@ -49,12 +52,11 @@ class UserController {
 
     @PostMapping
     public ModelAndView save(@Valid @ModelAttribute UserForm userForm) {
-        //System.out.println("Save: " + userForm);
         if (!Objects.equals(userForm.getPassword(), userForm.getPasswordConfirm())) {
             return error("Unable to add user", "Wrong password confirmation");
         }
         try {
-            ResponseEntity<String> entity = template.postForEntity(URL_CUSTOMER, userForm, String.class);
+            ResponseEntity<String> entity = template.postForEntity(urlConfig.getCustomer(), userForm, String.class);
             if (entity.getStatusCode() != HttpStatus.OK) {
                 return error("Unable to add user", entity.getBody());
             }
@@ -67,7 +69,7 @@ class UserController {
     @DeleteMapping
     public ModelAndView delete(@RequestParam String id) {
         try {
-            template.delete(URL_CUSTOMER_ID, id);
+            template.delete(urlConfig.getCustomer() + "/{id}", id);
         } catch (RestClientResponseException e) {
             return error("Unable to delete user", e.getResponseBodyAsString());
         }
