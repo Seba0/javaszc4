@@ -8,6 +8,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 @Data
 @NoArgsConstructor
 @Document("Customers")
@@ -17,16 +20,24 @@ public class Customer {
     private String id;
 
     @NonNull
+    @NotBlank(message = "Login is required")
     @Indexed(unique = true)
+    @Size(min = 5, message = "Login should have at last 5 characters")
     private String login;
 
     @NonNull
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Password should have at last 8 characters")
     private String password;
 
     @NonNull
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, message = "First name should have at last 2 characters")
     private String firstName;
 
     @NonNull
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, message = "Last name should have at last 2 characters")
     private String lastName;
 
     @NonNull

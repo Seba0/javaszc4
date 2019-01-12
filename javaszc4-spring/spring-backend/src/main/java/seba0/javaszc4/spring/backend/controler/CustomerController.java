@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import seba0.javaszc4.spring.backend.model.entity.Customer;
 import seba0.javaszc4.spring.backend.services.CustomerService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ class CustomerController {
     private CustomerService service;
 
     @PostMapping
-    ResponseEntity<String> add(@RequestBody Customer customer) {
+    ResponseEntity<String> add(@Valid @RequestBody Customer customer) {
         if (service.add(customer)) {
             return ResponseEntity.ok()
                     .body("Customer added success full.");
