@@ -12,10 +12,8 @@ $(document).ready(function () {
         let data = button.attr('data');
         let params = button.attr('data-param');
         console.log(params);
-        console.log($.parseJSON(params));
-        console.log($.param($.parseJSON(params)));
         $.ajax({
-            url: target + '?' + $.param($.parseJSON(params)),
+            url: target + '?' + params,
             method: method,
             data: data
         }).done(function (data) {

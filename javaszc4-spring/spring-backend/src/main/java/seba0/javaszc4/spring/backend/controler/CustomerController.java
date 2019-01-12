@@ -1,6 +1,5 @@
 package seba0.javaszc4.spring.backend.controler;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +39,8 @@ class CustomerController {
                 .collect(Collectors.toList());
     }
 
-    @DeleteMapping
-    ResponseEntity delete(@RequestBody ObjectId id) {
+    @DeleteMapping("{id}")
+    ResponseEntity delete(@PathVariable String id) {
         return service.delete(id)
                 .map(this::clearPassword)
                 .map(ResponseEntity::ok)

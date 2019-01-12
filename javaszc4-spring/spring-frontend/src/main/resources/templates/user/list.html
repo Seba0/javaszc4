@@ -44,7 +44,7 @@
                         data-target="/user"
                         data-confirm="Are you sure?"
                         data-method="delete"
-                        th:data-param="${userForm.id}"
+                        th:data-param="'id=' + ${userForm.id}"
                         class="btn btn-danger data-button">
                     Delete
                 </button>

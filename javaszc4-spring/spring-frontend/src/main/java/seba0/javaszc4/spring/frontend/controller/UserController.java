@@ -19,6 +19,7 @@ import java.util.Objects;
 class UserController {
 
     private static final String URL_CUSTOMER = "http://127.0.0.1:9090/customer";
+    private static final String URL_CUSTOMER_ID = URL_CUSTOMER + "/{id}";
     private final RestTemplate template = new RestTemplate();
 
     @GetMapping
@@ -64,9 +65,9 @@ class UserController {
     }
 
     @DeleteMapping
-    public ModelAndView delete(@RequestBody Object id) {
+    public ModelAndView delete(@RequestParam String id) {
         try {
-            template.delete(URL_CUSTOMER, id);
+            template.delete(URL_CUSTOMER_ID, id);
         } catch (RestClientResponseException e) {
             return error("Unable to delete user", e.getResponseBodyAsString());
         }
