@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -26,8 +27,6 @@ public class Customer {
     private String login;
 
     @NonNull
-    @NotBlank(message = "Password is required")
-    @Size(min = 8, message = "Password should have at last 8 characters")
     private String password;
 
     @NonNull
@@ -43,4 +42,7 @@ public class Customer {
     @NonNull
     @DBRef
     private Brand brand;
+
+    @NonNull
+    private Set<String> roles;
 }

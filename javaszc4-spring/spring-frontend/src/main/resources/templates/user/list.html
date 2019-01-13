@@ -2,8 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-
-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>List User</title>
@@ -25,7 +24,7 @@ extras-springsecurity3">
         <li class="nav-item active">
             <a class="nav-link" href="/user">List</a>
         </li>
-        <li class="nav-item">
+        <li sec:authorize="hasRole('ADMIN')" class="nav-item">
             <a class="nav-link" href="/user/register">Register</a>
         </li>
     </ul>
@@ -39,7 +38,7 @@ extras-springsecurity3">
             <th>First Name</th>
             <th>Last Name</th>
             <th>Brand</th>
-            <th/>
+            <th sec:authorize="hasRole('ROLE_ADMIN')"/>
         </tr>
         </thead>
         <tbody>
@@ -48,7 +47,7 @@ extras-springsecurity3">
             <td th:text="${userForm.firstName}"/>
             <td th:text="${userForm.lastName}"/>
             <td th:text="${userForm.brand}"/>
-            <td>
+            <td sec:authorize="hasRole('ADMIN')">
                 <button
                         data-target="/user"
                         data-confirm="Are you sure?"

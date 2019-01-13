@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -31,4 +32,7 @@ public class UserForm {
     @NotNull
     @Size(min = 5)
     private String passwordConfirm;
+
+    @NotNull
+    private Set<String> roles;
 }

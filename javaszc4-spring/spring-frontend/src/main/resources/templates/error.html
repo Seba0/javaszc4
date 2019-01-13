@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"/>
@@ -22,7 +22,7 @@
         <li class="nav-item">
             <a class="nav-link" href="/user">List</a>
         </li>
-        <li class="nav-item">
+        <li sec:authorize="hasRole('ADMIN')" class="nav-item">
             <a class="nav-link" href="/user/register">Register</a>
         </li>
     </ul>

@@ -2,8 +2,8 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-
-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      sec:authorize="hasRole('ADMIN')">
 <head>
     <meta charset="UTF-8">
     <title>Register User</title>
@@ -49,8 +49,16 @@ extras-springsecurity3">
         </div>
         <div class="form-group">
             <label>Repetition of the Password</label>
-            <input class="form-control" type="password" minlength="5" th:field="*{passwordConfirm}" required="required"/>
+            <input class="form-control" type="password" minlength="5" th:field="*{passwordConfirm}"
+                   required="required"/>
         </div>
+        <div class="form-group">
+            <input type="checkbox" th:field="*{roles}" th:value="'ADMIN'"/><label>Administrator</label>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" th:field="*{roles}" th:value="'USER'"/><label>User</label>
+        </div>
+        <sec:csrfInput/>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
