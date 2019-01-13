@@ -48,7 +48,7 @@ class UserController {
     }
 
     private ModelAndView error(String title, String message) {
-        ModelAndView modelAndView = new ModelAndView("user/error");
+        ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("title", title);
         modelAndView.addObject("message", message);
         return modelAndView;

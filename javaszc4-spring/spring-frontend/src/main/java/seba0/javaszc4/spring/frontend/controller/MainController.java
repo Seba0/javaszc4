@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/login")
-class LoginController {
+@RequestMapping("/")
+class MainController {
 
     @GetMapping
+    private String home() {
+        return "redirect:/user";
+    }
+
+    @GetMapping("login")
     public String login() {
         return "login";
     }
