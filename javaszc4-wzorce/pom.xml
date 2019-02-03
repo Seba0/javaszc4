@@ -36,5 +36,6 @@
         <module>wzorce-null</module>
         <module>wzorce-mvc</module>
         <module>wzorce-adapter</module>
+        <module>wzorce-monostate</module>
     </modules>
 </project>
