@@ -38,5 +38,6 @@
         <module>wzorce-adapter</module>
         <module>wzorce-monostate</module>
         <module>wzorce-serwer-abstrakcyjny</module>
+        <module>wzorce-obiekt-rozszerzenia</module>
     </modules>
 </project>
